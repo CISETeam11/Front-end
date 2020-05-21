@@ -2,15 +2,18 @@
     position: relative;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 50px;
+    width: 70%;
+    height: 60px;
     border-radius: 40px;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    border: .5px solid #e6e6e6;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background: #fff;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
+  }
+  .search-form:focus-within{
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   }
 
   .search-input {
@@ -47,10 +50,67 @@
     outline: none !important;
     cursor: pointer;
   }
-
+  .label{
+    font-size: 18px;
+    color: #5a6674;
+    line-height: 1.5;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .search-button svg {
     width: 20px;
     height: 20px;
-    fill: #5a6674;
+    color: #5a6674;
+  }
+
+  input[type=number]{
+    width: 80px;
+    padding-left: 10px;
+  } 
+  #search-option-container{
+    position: relative;
+    margin-top: 20px;
+    width:100%;
+  }
+  #search-option{
+    display: table;
+    margin: 0 auto;
+    margin-right: 42%;
+  }
+  .btn{
+    color: #5a6674;
+  }
+  .dropbtn {
+    color: #5a6674;
+    float: right;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
 /***********************************/
