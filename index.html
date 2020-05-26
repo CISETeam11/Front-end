@@ -147,6 +147,16 @@
         $('#datetimepicker').datetimepicker('maxDate', e.date);
       });
     });
+    
+      //handle search input title
+      function httpGet(theUrl) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", theUrl, false); 
+      xmlHttp.send(null);
+      return xmlHttp.responseText;
+    }
+    var articlesJSON = JSON.parse(httpGet("https://app-articles-ae-aut.azurewebsites.net/api/articles"));
+    console.log(articlesJSON[0].author);
   </script>
 </body>
 
