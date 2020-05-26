@@ -30,12 +30,13 @@
           style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
     </li>
     <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a>
-    <li class="nav-item mx-2">
-      <p class="text-muted"><a class="nav-link text-reset user-select-none"
-          style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
-    </li>
+      <li class="nav-item mx-2">
+        <p class="text-muted"><a class="nav-link text-reset user-select-none"
+            style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
+      </li>
 
   </ul>
+
 
   <div class="container">
     <div class="row invisible" style="height: 100px"></div>
@@ -52,7 +53,7 @@
       <div class="col-12 justify-content-center">
         <form class="search-form">
           <input type="search" value="" class="search-input">
-          <button type="submit" class="search-button" disabled>
+          <button type="submit" class="search-button" disabled onclick="hello()">
             <svg class="submit-button">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
             </svg>
@@ -71,7 +72,7 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10 d-flex justify-content-center">
-        
+
         <div class="form-group">
           <div class="input-group date" id="datetimepicker" data-target-input="nearest">
             <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"
@@ -84,7 +85,8 @@
         <p class="px-2" style="margin-top: 8px;">TO</p>
         <div class="form-group">
           <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="End date" />
+            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"
+              placeholder="End date" />
             <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
@@ -94,29 +96,33 @@
       </div>
     </div>
   </div>
-  <div id="search-option-container">
-    <div id="search-option">
+    <div class="center">
       <div class="dropdown">
         <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
         <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
         </div>
       </div>
       <div class="dropdown">
         <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Operator</button>
         <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
         </div>
       </div>
-      <input size="1"  type="number" placeholder="value">
-      <button class="btn"><i class="fa fa-plus-circle" ></i></button>
-      <button class="btn"><i class="fa fa-times-circle" ></i></button>
+      <input size="1" type="number" placeholder="value">
+      <button class="btn"><i class="fa fa-plus-circle"></i></button>
+      <button class="btn"><i class="fa fa-times-circle"></i></button>
     </div>
+  
+  <div class="center">
+    <button id='search-btn' onclick="hello()">search</button>
   </div>
+
+
   <div class="container">
     <div class='col-md-5'>
 
