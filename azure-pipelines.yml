@@ -1,0 +1,31 @@
+trigger:
+- master
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Npm@1
+  displayName: 'Install npm dependencies'
+  inputs:
+    command: 'install'
+
+- task: gulp@1
+  displayName: 'Run gulp tasks'
+  inputs:
+    targets: 'default'
+    enableCodeCoverage: false
+
+- task: CopyFiles@2
+  displayName: 'Copy images folder to dist'
+  inputs:
+    SourceFolder: '$(build.sourcesDirectory)/img/'
+    Contents: '**'
+    TargetFolder: '$(build.sourcesDirectory)/dist/img/'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(build.sourcesDirectory)/dist/'
+    ArtifactName: 'SEER.WebApp'
+    publishLocation: 'Container'
