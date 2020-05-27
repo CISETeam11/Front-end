@@ -54,7 +54,7 @@
     <div class="row">
       <div class="col"></div>
       <div class="col-12 justify-content-center">
-        <form class="search-form">
+        <form class="search-form" id="search-form">
           <input type="search" value="" class="search-input" id="searchbar">
           <button type="submit" class="search-button" disabled onclick="btnSearch()">
             <svg class="submit-button">
@@ -71,6 +71,7 @@
       </div>
       <div class="col"></div>
     </div>
+
     <div class="row invisible" style="height: 50px"></div>
     <div class="row">
       <div class="col-1"></div>
@@ -99,8 +100,9 @@
       </div>
     </div>
   </div>
+
+  <!--SE Methods-->
   <div class="center">
-    <div id="kok">
       <div class="dropdown">
         <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
         <div class="dropdown-content">
@@ -123,6 +125,10 @@
     </div>
   </div>
 
+  <!--Search Error message-->
+  <div class="center " id="error-msg"></div>
+
+  <!--Search button-->
   <div class="center">
     <button id='search-btn' onclick="btnSearch()">search</button>
   </div>
@@ -156,6 +162,6 @@
 </body>
 
 <!-- Local JS:: after body is loded -->
-<script type='text/javascript' src="js/searchbar.js"></script>
+<script type='text/javascript' src="js/search.js"></script>
 
 </html>
