@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+  <!-- Local JS -->
+  <script type='text/javascript' src="js/network.js"></script>
   <title>Software Engineering Evidence Repository</title>
 </head>
 
@@ -52,8 +55,8 @@
       <div class="col"></div>
       <div class="col-12 justify-content-center">
         <form class="search-form">
-          <input type="search" value="" class="search-input">
-          <button type="submit" class="search-button" disabled onclick="hello()">
+          <input type="search" value="" class="search-input" id="searchbar">
+          <button type="submit" class="search-button" disabled onclick="btnSearch()">
             <svg class="submit-button">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
             </svg>
@@ -96,7 +99,8 @@
       </div>
     </div>
   </div>
-    <div class="center">
+  <div class="center">
+    <div id="kok">
       <div class="dropdown">
         <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
         <div class="dropdown-content">
@@ -117,9 +121,10 @@
       <button class="btn"><i class="fa fa-plus-circle"></i></button>
       <button class="btn"><i class="fa fa-times-circle"></i></button>
     </div>
-  
+  </div>
+
   <div class="center">
-    <button id='search-btn' onclick="hello()">search</button>
+    <button id='search-btn' onclick="btnSearch()">search</button>
   </div>
 
 
@@ -147,17 +152,10 @@
         $('#datetimepicker').datetimepicker('maxDate', e.date);
       });
     });
-    
-      //handle search input title
-      function httpGet(theUrl) {
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open("GET", theUrl, false); 
-      xmlHttp.send(null);
-      return xmlHttp.responseText;
-    }
-    var articlesJSON = JSON.parse(httpGet("https://app-articles-ae-aut.azurewebsites.net/api/articles"));
-    console.log(articlesJSON[0].author);
   </script>
 </body>
+
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/searchbar.js"></script>
 
 </html>
