@@ -14,7 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <!--  Custom CSS, tempusdominus bootstrap CSS -->
   <link rel="stylesheet" href="css/search_page.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
@@ -110,12 +110,20 @@
       <button class="btn"><i class="fa fa-plus-circle"></i></button>
       <button class="btn"><i class="fa fa-times-circle"></i></button>
     </div>
-  <!-- search result --> 
-  <div class="row invisible" style="height: 50px"></div>
-  <div class="row" id="app">
-    <div>{{msg}}</div>
-  </div>
-
+    <!-- search result -->
+    <div class="row invisible" style="height: 50px"></div>
+    <div id="search_result" v-for="item in items">
+      <div class="row" style="height: 50px">
+        <div v-cloak class=" float-left">
+          <a href="#">
+            <h3>{{item.title}}</h3>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div v-cloak class="float-left">{{item.rating}}</div>
+      </div>
+    </div>
   </div>
 
 
@@ -141,9 +149,15 @@
 
 <script type="text/javascript">
   var vm = new Vue({
-    el: '#app',
-    data:{
-      msg: 'Vue TEST'
+    el: '#search_result',
+    data: {
+      items:
+        [
+          {
+            title: 'Essay Title',
+            rating: 'User Article rating :'
+          }
+        ]
     }
   });
 </script>
