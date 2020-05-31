@@ -20,7 +20,9 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
-  <title>Software Engineering Evidence Repository</title>
+  <!-- Local JS -->
+  <script type='text/javascript' src="js/network.js"></script>
+    <title>Software Engineering Evidence Repository</title>
 </head>
 
 <body>
@@ -43,8 +45,8 @@
         <img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
       </div>
       <div class="col-8">
-        <form class="search-form float-left">
-          <input type="search" value="" class="search-input">
+        <form class="search-form float-left" id="search-form">
+          <input type="search" value="" class="search-input" id="searchbar" >
           <button type="submit" class="search-button" disabled onclick="hello()">
             <svg class="submit-button">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
@@ -110,18 +112,28 @@
       <button class="btn"><i class="fa fa-plus-circle"></i></button>
       <button class="btn"><i class="fa fa-times-circle"></i></button>
     </div>
+
+    <!--Search Error message-->
+  <div class="center " id="error-msg"></div>
+
+  <!--Search button-->
+  <div class="center">
+    <button id='search-btn' onclick="btnSearch()">search</button>
+  </div>
     <!-- search result -->
     <div class="row invisible" style="height: 50px"></div>
-    <div id="search_result" v-for="item in items">
-      <div class="row" style="height: 50px">
-        <div v-cloak class=" float-left">
+    <div id="search_result" >
+      <div class="row" style="height: 100px">
+        <div v class=" float-left">
           <a href="#">
-            <h3>{{item.title}}</h3>
+            <h3 id="title"></h3>
           </a>
         </div>
       </div>
       <div class="row">
-        <div v-cloak class="float-left">{{item.rating}}</div>
+        <div class="float-left" >
+          <span id="averageRating"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -147,19 +159,6 @@
   });
 </script>
 
-<script type="text/javascript">
-  var vm = new Vue({
-    el: '#search_result',
-    data: {
-      items:
-        [
-          {
-            title: 'Essay Title',
-            rating: 'User Article rating :'
-          }
-        ]
-    }
-  });
-</script>
-
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/search.js"></script>
 </html>
