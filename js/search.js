@@ -36,38 +36,24 @@ function handleSearch() {
     }
     var client = new HttpClient();// Calling api to get atricles.
     client.get(URL_ATRICLES, function (response) {
-        var articlesJSON = JSON.parse(response);
-        articlesJSON.forEach(element => {
-            element.author = element.author.toUpperCase();// check for author.
-            if (element.author.indexOf(searchbarInput) !== -1) {
-                articles.push(element);
-            } else {
-                element.title = element.title.toUpperCase();// check for title.
-                if (element.title.indexOf(searchbarInput) !== -1) {
-                    articles.push(element);
-                }
-            }
-            if (articles.length == 0) {
-                showMessage("0 articles found.")
-                return;
-            }
-            // TODO: Filter for date-range
-            // TODO: Filter for SE Methods
+        const articles = JSON.parse(response);
+        let results = [];
+
+        articles.forEach(article => {
+            article.results.forEach(result => {
+                results.push({results: result, article: article});
+            });
+
+            showMessage(articles.length + " article(s) found.");
         });
 
-        if (articles.length == 0) {
-            showMessage("0 articles found.")
-        } else {
-            showMessage(articles.length + " article(s) found.");
-            var title = document.getElementById("title");
-            var averageRating = document.getElementById("averageRating");
-            for (i = 0; i < articles.length; i++) {
-                title.innerHTML += articlesJSON[i].title;
-                averageRating.innerHTML += "Average Rating: " + articlesJSON[i].averageRating;
+        var vue = new Vue({
+            el:'#search_result',
+            data:{
+              articles: results
             }
-        }
+        });
     });
-
 }
 
 function btnSearch() {
