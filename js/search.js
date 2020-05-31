@@ -61,9 +61,11 @@ function handleSearch() {
             showMessage(articles.length + " article(s) found.");
             var title = document.getElementById("title");
             var averageRating = document.getElementById("averageRating");
+            title.innerHTML="";
+            averageRating.innerHTML="";
             for (i = 0; i < articles.length; i++) {
-                title.innerHTML += articlesJSON[i].title;
-                averageRating.innerHTML += "Average Rating: " + articlesJSON[i].averageRating;
+                title.innerHTML = articlesJSON[i].title;
+                averageRating.innerHTML = "Average Rating: " + articlesJSON[i].averageRating;
             }
         }
     });
