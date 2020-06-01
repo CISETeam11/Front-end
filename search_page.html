@@ -15,11 +15,13 @@
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
   <!--  Custom CSS, tempusdominus bootstrap CSS -->
   <link rel="stylesheet" href="css/search_page.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
   <!-- Local JS -->
   <script type='text/javascript' src="js/network.js"></script>
     <title>Software Engineering Evidence Repository</title>
@@ -125,34 +127,26 @@
 
     <div id="search_result" v-cloak>
       <template>
-        <table class="table table-bordered" v-if="articles">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Year</th>
-              <th>DOI</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="articleResult in articles">
-                <td>{{articleResult.article.title}}</td>
-                <td>{{articleResult.article.author}}</td>
-                <td>{{articleResult.article.year}}</td>
-                <td><a :href="'https://doi.org/' + articleResult.article.doi" target="_blank">{{articleResult.article.doi}}</a></td>
-                <td>{{articleResult.results.result}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-else>
-          <p>No Results Found!</p>
+        <div>
+          <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
+          :sort-desc.sync="sortDesc" striped hover bordered responsive >
+            <template v-slot:table-busy>
+              <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Loading...</strong>
+              </div>
+            </template>
+
+            <template v-slot:cell(article.doi)="data">
+              <a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
+            </template>
+          </b-table>
         </div>
       </template>
     </div>
   </div>
-
 </body>
+
 <script type="text/javascript">
   $(function () {
     $('#datetimepicker').datetimepicker({
