@@ -88,7 +88,7 @@ function handleSearch() {
     }
 
     // TODO: Filter for SE Methods, TODO: Filter for date-range
-    url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
+    var url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
     or contains(toupper(author),'${searchbarInput}')
     or contains(toupper(doi),'${searchbarInput}')
     or Results/any(a: contains(toupper(a/Result),'${searchbarInput}'))
