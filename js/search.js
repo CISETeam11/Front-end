@@ -1,5 +1,5 @@
 //:: Handles searchbar input :://
-const URL_ATRICLES = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
+const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
 const vueTable = new Vue({
     el: '#search_result',
@@ -54,7 +54,7 @@ function showMessage(message, type) {
 
 //:: A fuction to handle pressing enter while focues on search bar :://
 function searchbarOnEnter() {
-    document.getElementById('searchbar').onkeypress = function(e) {
+    document.getElementById('searchbar').onkeypress = function (e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == '13') {
@@ -66,16 +66,24 @@ function searchbarOnEnter() {
 
 //:: A function to get input from searchbar to get results from API :://
 function handleSearch() {
-    var searchbarInput = document.getElementsByClassName('search-input')[0].value;
-    searchbarInput = searchbarInput.toUpperCase();
+    try{
+        var searchbarInput = document.getElementsByClassName('search-input')[0].value;
+        searchbarInput = searchbarInput.toUpperCase();
+    } catch(err) {
+        searchbarInput = testInput;
+    }    
+
     if (!validateSearchbar(searchbarInput)) {
         return;
     }
 
+    // TODO: Filter for SE Methods, TODO: Filter for date-range
+    url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}') or contains(toupper(author),'${searchbarInput}')`;
+
     vueTable.isBusy = true;
     var client = new HttpClient(); // Calling api to get atricles.
 
-    client.get(URL_ATRICLES, function(response) {
+    client.get(url, function(response) {
         const articles = JSON.parse(response);
         let results = [];
 
@@ -97,24 +105,43 @@ function btnSearch() {
     handleSearch();
 }
 
-function validateSearchbar(searchbarInput) {
+function validateSearchbar(searchbarInput){
     var searchbar = document.getElementById("search-form");
-    searchbar.classList.remove("search-error");
-    if (searchbarInput == "") {
-        searchbar.classList.add("search-error");
-        showMessage("Cannot be empty.", "Error");
-        return false;
-    } else if (searchbarInput.length < 2) {
-        searchbar.classList.add("search-error");
-        showMessage("Must be more than 2 or more characters.", "Error");
-        return false;
-    } else if (searchbarInput.length > 120) {
-        searchbar.classList.add("search-error");
-        showMessage("Must not be more than 120 characters.", "Error");
+    try{
+        searchbar.classList.remove("search-error");
+    }catch(err){}
+    if(searchbarInput!=""){
+        if(searchbarInput.length<2){
+            try{
+                searchbar.classList.add("search-error");
+                showMessage("Must be more than 2 or more characters.","Error");
+            }catch(err){}
+            return false;
+        }
+        else if(searchbarInput.length>120){
+            try{
+                searchbar.classList.add("search-error");
+                showMessage("Must not be more than 120 characters.","Error");
+            }catch(err){}
+            return false;
+        }
+    }
+    return true;
+}
+
+function asss(ant)
+{
+    if(ant=="A"){
         return false;
     }
     return true;
 }
 
+//document.onload = searchbarOnEnter();
 
-document.onload = searchbarOnEnter();
+
+//Exporting modules for testing.
+module.exports = {
+    validateSearchbar: validateSearchbar,
+    handleSearch: handleSearch
+};

@@ -25,40 +25,47 @@
 </head>
 
 <body>
-  <div class="row mt-1"></div>
+  	<div class="row mt-1"></div>
     <ul class="nav justify-content-end">
         <li class="nav-item mx-2">
             <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
         </li>
-        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a>
-            <li class="nav-item mx-2">
-                <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
-            </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+		<li class="nav-item mx-2">
+			<p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
+		</li>
     </ul>
 
 	<div class="container">
-      	<div class="row">
-        	<div class="col-sm-3">
-                <img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
-            </div>
-            <div class="col-8">
-                <form class="search-form float-left" id="search-form">
-                    <input type="search" value="" class="search-input" id="searchbar">
-					<button type="submit" class="search-button" disabled onclick="hello()">
-            			<svg class="submit-button">
-              				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            			</svg>
-          			</button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
-						<symbol id="search" viewBox="0 0 32 32">
-							<path
-								d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
-						</symbol>
-          			</svg>
-                </form>
-            </div>
-            <div class="col-2"></div>
-        </div>
+		<div class="row invisible" style="height: 100px"></div>
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 justify-content-center">
+				<img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
+			</div>
+			<div class="col-2"></div>
+		</div>
+		<div class="row invisible" style="height: 50px"></div>
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-12 justify-content-center">
+				<form class="search-form" id="search-form">
+					<input type="search" value="" class="search-input" id="searchbar">
+					<button type="submit" class="search-button" disabled onclick="btnSearch()">
+					<svg class="submit-button">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+					</svg>
+					</button>
+					<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+					<symbol id="search" viewBox="0 0 32 32">
+						<path
+						d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+					</symbol>
+					</svg>
+				</form>
+			</div>
+			<div class="col"></div>
+		</div>
 
         <div class="row invisible" style="height: 50px"></div>
         <div class="row">
