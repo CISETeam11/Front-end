@@ -24,6 +24,13 @@ steps:
     Contents: '**'
     TargetFolder: '$(build.sourcesDirectory)/dist/img/'
 
+- task: CopyFiles@2
+  displayName: 'Copy js folder to dist'
+  inputs:
+    SourceFolder: '$(build.sourcesDirectory)/js/'
+    Contents: '**'
+    TargetFolder: '$(build.sourcesDirectory)/dist/js/'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(build.sourcesDirectory)/dist/'
