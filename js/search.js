@@ -79,6 +79,10 @@ function handleSearch() {
         return;
     }
 
+    if ($("#search_result").hasClass("invisible")) {
+        $("#search_result").removeClass("invisible");
+    }
+
     // TODO: Filter for SE Methods, TODO: Filter for date-range
     url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
     or contains(toupper(author),'${searchbarInput}')
@@ -103,8 +107,6 @@ function handleSearch() {
         vueTable.articles = results;
         vueTable.isBusy = false;
         showMessage(articles.length + " article(s) found.");
-        //var searchResult = document.getElementById("search_result");
-        //searchResult.classList.remove("invisible");
     });
 }
 
