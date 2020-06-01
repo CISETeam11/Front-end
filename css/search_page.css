@@ -150,11 +150,4 @@ input[type=number] {
     border: .5px solid #ff4d4d;
 }
 
-.error-text{	
-	color: #ff4d4d;	
-	font-size: small;	
-	margin-bottom: 0px;	
-	padding-bottom: 0px;	
-}
-
 /***********************************/
