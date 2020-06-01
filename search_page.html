@@ -129,8 +129,15 @@
         <div class="" id="search_result" v-cloak>
             <template>
 				<div>
-					<b-table class="user-select-none" :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
-						:sort-desc.sync="sortDesc" striped hover bordered responsive >
+					<b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
+						:sort-desc.sync="sortDesc" striped hover bordered responsive>
+
+						<!-- Table column headers-->
+						<template v-slot:head()="scope">
+							<div class="user-select-none">{{scope.label}}</div>
+						</template>
+						
+						<!-- Table loading spinner-->
 						<template v-slot:table-busy>
 							<div class="text-center text-danger my-2">
 								<b-spinner class="align-middle"></b-spinner>
