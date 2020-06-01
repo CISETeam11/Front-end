@@ -45,6 +45,7 @@ function showMessage(message, type) {
     if (type == "Error") {
         errorMessage.classList.add("error-text");
         errorMessage.innerHTML = message;
+        document.getElementById("searchbar").focus();
     } else {
         errorMessage.innerHTML = message;
     }
