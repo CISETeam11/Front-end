@@ -133,12 +133,13 @@ input[type=number] {
 }
 
 #search-btn {
-    background-color: #e9e9e9;
+    background-color: #cecece;
     border: #5a6674;
 }
 
 #search-btn:hover {
-    background-color: #d1d1d1;
+    background-color: #a8a8a8;
+    color: #383838;
 }
 
 #search-btn:focus {
@@ -150,4 +151,18 @@ input[type=number] {
     border: .5px solid #ff4d4d;
 }
 
+.float-container{
+    width: 500px; 
+    margin: 0 auto; 
+}
+.float-container p{
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 25px;
+}
+.date{
+    float: left;
+    width: 50%;
+    
+}
 /***********************************/

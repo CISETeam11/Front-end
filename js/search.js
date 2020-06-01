@@ -41,13 +41,17 @@ function showMessage(message, type) {
     var errorMessage = document.getElementById("error-msg");
     errorMessage.classList.remove("error-text");
     errorMessage.classList.remove("invisible");
+    errorMessage.classList.remove("alert-danger");
+    errorMessage.classList.remove("alert-success");
 
     if (type == "Error") {
         errorMessage.classList.add("error-text");
         errorMessage.innerHTML = message;
         document.getElementById("searchbar").focus();
+        errorMessage.classList.add("alert-danger");
     } else {
         errorMessage.innerHTML = message;
+        errorMessage.classList.add("alert-success");
     }
 
 }
@@ -110,6 +114,11 @@ function handleSearch() {
     });
 }
 
+function gotoBottom(id){
+    var element = document.getElementById(id);
+    element.scrollTop = element.scrollHeight - element.clientHeight;
+ }
+
 function btnSearch() {
     handleSearch();
 }
@@ -137,15 +146,6 @@ function validateSearchbar(searchbarInput){
     }
     return true;
 }
-
-function asss(ant)
-{
-    if(ant=="A"){
-        return false;
-    }
-    return true;
-}
-
 //document.onload = searchbarOnEnter();
 
 
