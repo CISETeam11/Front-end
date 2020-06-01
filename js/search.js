@@ -1,13 +1,51 @@
 //:: Handles searchbar input :://
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
+const vueTable = new Vue({
+    el: '#search_result',
+    data: {
+        isBusy: false,
+        sortBy: 'article.title',
+        sortDesc: false,
+        articles: [],
+        fields: [{
+                key: 'article.title',
+                label: 'Title',
+                sortable: true
+            },
+            {
+                key: 'article.author',
+                label: 'Author',
+                sortable: true
+            },
+            {
+                key: 'article.year',
+                label: 'Year',
+                sortable: true
+            },
+            {
+                key: 'article.doi',
+                label: 'DOI',
+                sortable: true
+            },
+            {
+                key: 'results.result',
+                label: 'Result',
+                sortable: true
+            }
+        ]
+    }
+});
+
 //:: A simple function to show user messages ::/
 function showMessage(message, type) {
     var errorMessage = document.getElementById("error-msg");
     errorMessage.classList.remove("error-text");
+    errorMessage.classList.remove("invisible");
     if (type == "Error") {
         errorMessage.classList.add("error-text");
         errorMessage.innerHTML = message;
+        document.getElementById("searchbar").focus();
     } else {
         errorMessage.innerHTML = message;
     }
@@ -27,33 +65,40 @@ function searchbarOnEnter() {
 }
 
 //:: A function to get input from searchbar to get results from API :://
-function handleSearch(testInput) {
-    var articles=[];// An array to hold the filtered atricles.
+function handleSearch() {
     try{
         var searchbarInput = document.getElementsByClassName('search-input')[0].value;
         searchbarInput = searchbarInput.toUpperCase();
-    }catch(err){
-        searchbarInput=testInput;
-    }            
-        
-    url=BASE_URL+"?$filter=contains(toupper(title),'"+searchbarInput+"') or contains(toupper(author),'"+searchbarInput+"')"; // TODO: Filter for SE Methods, TODO: Filter for date-range
-    if(!validateSearchbar(searchbarInput)){
+    } catch(err) {
+        searchbarInput = testInput;
+    }    
+
+    if (!validateSearchbar(searchbarInput)) {
         return;
     }
-    var client = new HttpClient();// Calling api to get atricles.
-    client.get(url, function (response) {
-        var articlesJSON = JSON.parse(response);
-        articlesJSON.forEach(element => {
-            articles.push(element);
-        });
-        if (articles.length == 0) {
-            showMessage("0 articles found.")
-        } else {
-            showMessage(articles.length + " article(s) found.")
-        }
 
+    // TODO: Filter for SE Methods, TODO: Filter for date-range
+    url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}') or contains(toupper(author),'${searchbarInput}')`;
+
+    vueTable.isBusy = true;
+    var client = new HttpClient(); // Calling api to get atricles.
+
+    client.get(url, function(response) {
+        const articles = JSON.parse(response);
+        let results = [];
+
+        articles.forEach(article => {
+            article.results.forEach(result => {
+                results.push({ results: result, article: article });
+            });
+        });
+
+        vueTable.articles = results;
+        vueTable.isBusy = false;
+        showMessage(articles.length + " article(s) found.");
+        //var searchResult = document.getElementById("search_result");
+        //searchResult.classList.remove("invisible");
     });
-    return articles;
 }
 
 function btnSearch() {
@@ -87,9 +132,9 @@ function validateSearchbar(searchbarInput){
 function asss(ant)
 {
     if(ant=="A"){
-    return false;
-}
-return true;
+        return false;
+    }
+    return true;
 }
 
 //document.onload = searchbarOnEnter();
@@ -99,5 +144,4 @@ return true;
 module.exports = {
     validateSearchbar: validateSearchbar,
     handleSearch: handleSearch
-
 };

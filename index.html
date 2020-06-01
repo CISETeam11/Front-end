@@ -2,162 +2,181 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <!-- Bootstrap JS, Jquery, moment JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!--  Custom CSS, tempusdominus bootstrap CSS -->
-  <link rel="stylesheet" href="css/simple.css">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
-
-  <title>Software Engineering Evidence Repository</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap JS, Jquery, moment JS, Vue JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <!--  Custom CSS, tempusdominus bootstrap CSS -->
+    <link rel="stylesheet" href="css/search_page.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <title>Software Engineering Evidence Repository</title>
 </head>
 
 <body>
-  <div class="row mt-1"></div>
-  <ul class="nav justify-content-end">
-    <li class="nav-item mx-2">
-      <p class="text-muted"><a class="nav-link text-reset user-select-none"
-          style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
-    </li>
-    <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a>
-      <li class="nav-item mx-2">
-        <p class="text-muted"><a class="nav-link text-reset user-select-none"
-            style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
-      </li>
+  	<div class="row mt-1"></div>
+    <ul class="nav justify-content-end">
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+		<li class="nav-item mx-2">
+			<p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
+		</li>
+    </ul>
 
-  </ul>
+	<div class="container">
+		<div class="row invisible" style="height: 100px"></div>
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 justify-content-center">
+				<img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
+			</div>
+			<div class="col-2"></div>
+		</div>
+		<div class="row invisible" style="height: 50px"></div>
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-12 justify-content-center">
+				<form class="search-form" id="search-form">
+					<input type="search" value="" class="search-input" id="searchbar">
+					<button type="submit" class="search-button" disabled onclick="btnSearch()">
+					<svg class="submit-button">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+					</svg>
+					</button>
+					<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+					<symbol id="search" viewBox="0 0 32 32">
+						<path
+						d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+					</symbol>
+					</svg>
+				</form>
+			</div>
+			<div class="col"></div>
+		</div>
 
+        <div class="row invisible" style="height: 50px"></div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 d-flex justify-content-center">
 
-  <div class="container">
-    <div class="row invisible" style="height: 100px"></div>
-    <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8 justify-content-center">
-        <img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
-      </div>
-      <div class="col-2"></div>
-    </div>
-    <div class="row invisible" style="height: 50px"></div>
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-12 justify-content-center">
-        <form class="search-form" id="search-form">
-          <input type="search" value="" class="search-input" id="searchbar">
-          <button type="submit" class="search-button" disabled onclick="btnSearch()">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-          <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
-            <symbol id="search" viewBox="0 0 32 32">
-              <path
-                d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
-            </symbol>
-          </svg>
-        </form>
-      </div>
-      <div class="col"></div>
-    </div>
-
-    <div class="row invisible" style="height: 50px"></div>
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10 d-flex justify-content-center">
-
-        <div class="form-group">
-          <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"
-              placeholder="Start date" />
-            <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
-              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" placeholder="Start date" />
+                        <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="px-2" style="margin-top: 8px;">TO</p>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="End date" />
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
             </div>
-          </div>
         </div>
-        <p class="px-2" style="margin-top: 8px;">TO</p>
-        <div class="form-group">
-          <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2"
-              placeholder="End date" />
-            <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+
+        <div class="d-flex justify-content-center">
+            <div class="dropdown">
+                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
+                <div class="dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
             </div>
-          </div>
+            <div class="dropdown">
+                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Operator</button>
+                <div class="dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            </div>
+            <input size="1" type="number" placeholder="value">
+            <button class="btn"><i class="fa fa-plus-circle"></i></button>
+            <button class="btn"><i class="fa fa-times-circle"></i></button>
         </div>
-        <div class="col-1"></div>
-      </div>
-    </div>
-  </div>
 
-  <!--SE Methods-->
-  <div class="center">
-      <div class="dropdown">
-        <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+        <div class="row invisable" style="height: 20px"></div>
+        <!--Search Error message-->
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 alert alert-danger invisible text-center" role="alert" id="error-msg"></div>
+            <div class="col-4"></div>
         </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Operator</button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+        <!--Search button-->
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button class="btn btn-primary btn-lg btn-block" id='search-btn' onclick="btnSearch()">Search</button>
+            </div>
+            <div class="col-4"></div>
         </div>
-      </div>
-      <input size="1" type="number" placeholder="value">
-      <button class="btn"><i class="fa fa-plus-circle"></i></button>
-      <button class="btn"><i class="fa fa-times-circle"></i></button>
-    </div>
-  </div>
+        <!-- search result -->
+        <div class="row invisible" style="height: 50px"></div>
 
-  <!--Search Error message-->
-  <div class="center " id="error-msg"></div>
+        <div class="" id="search_result" v-cloak>
+            <template>
+				<div>
+					<b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
+						:sort-desc.sync="sortDesc" striped hover bordered responsive>
 
-  <!--Search button-->
-  <div class="center">
-    <button id='search-btn' onclick="btnSearch()">search</button>
-  </div>
+						<!-- Table column headers-->
+						<template v-slot:head()="scope">
+							<div class="user-select-none">{{scope.label}}</div>
+						</template>
+						
+						<!-- Table loading spinner-->
+						<template v-slot:table-busy>
+							<div class="text-center text-danger my-2">
+								<b-spinner class="align-middle"></b-spinner>
+								<strong>Loading...</strong>
+							</div>
+						</template>
 
-
-  <div class="container">
-    <div class='col-md-5'>
-
-    </div>
-    <div class='col-md-5'>
-
-    </div>
-  </div>
-  <script type="text/javascript">
-    $(function () {
-      $('#datetimepicker').datetimepicker({
-        format: 'L'
-      });
-      $('#datetimepicker2').datetimepicker({
-        useCurrent: true,
-        format: 'L'
-      });
-      $("#datetimepicker").on("change.datetimepicker", function (e) {
-        $('#datetimepicker2').datetimepicker('minDate', e.date);
-      });
-      $("#datetimepicker2").on("change.datetimepicker", function (e) {
-        $('#datetimepicker').datetimepicker('maxDate', e.date);
-      });
-    });
-  </script>
+						<template v-slot:cell(article.doi)="data">
+							<a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
+						</template>
+					</b-table>
+				</div>
+			</template>
+    	</div>
+  	</div>
 </body>
+
+<script type="text/javascript">
+    $(function() {
+        $('#datetimepicker').datetimepicker({
+            format: 'L'
+        });
+        $('#datetimepicker2').datetimepicker({
+            useCurrent: true,
+            format: 'L'
+        });
+        $("#datetimepicker").on("change.datetimepicker", function(e) {
+            $('#datetimepicker2').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepicker2").on("change.datetimepicker", function(e) {
+            $('#datetimepicker').datetimepicker('maxDate', e.date);
+        });
+    });
+</script>
 
 <!-- Local JS:: after body is loded -->
 <script type='text/javascript' src="js/network.js"></script>
