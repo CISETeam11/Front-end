@@ -129,7 +129,7 @@
         <div class="" id="search_result" v-cloak>
             <template>
         <div>
-          <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
+          <b-table class="user-select-none" :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
           :sort-desc.sync="sortDesc" striped hover bordered responsive >
             <template v-slot:table-busy>
               <div class="text-center text-danger my-2">
