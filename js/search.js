@@ -1,5 +1,5 @@
 //:: Handles searchbar input :://
-const URL_ATRICLES = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
+const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
 //:: A simple function to show user messages ::/
 function showMessage(message, type) {
@@ -27,42 +27,33 @@ function searchbarOnEnter() {
 }
 
 //:: A function to get input from searchbar to get results from API :://
-function handleSearch() {
+function handleSearch(testInput) {
     var articles=[];// An array to hold the filtered atricles.
-    var searchbarInput = document.getElementsByClassName('search-input')[0].value;
+    try{
+        var searchbarInput = document.getElementsByClassName('search-input')[0].value;
         searchbarInput = searchbarInput.toUpperCase();
-        if(!validateSearchbar(searchbarInput)){
-            return;
-        }
-        var client = new HttpClient();// Calling api to get atricles.
-        client.get(URL_ATRICLES, function (response) {
-            var articlesJSON = JSON.parse(response);
-            articlesJSON.forEach(element => {
-                element.author = element.author.toUpperCase();// check for author.
-                if (element.author.indexOf(searchbarInput) !== -1) {
-                    articles.push(element);
-                } else {
-                    element.title = element.title.toUpperCase();// check for title.
-                    if (element.title.indexOf(searchbarInput) !== -1) {
-                        articles.push(element);
-                    }
-                }
-                if (articles.length == 0) {
-                    showMessage("0 articles found.")
-                    return;
-                }
-                // TODO: Filter for date-range
-                // TODO: Filter for SE Methods
-            });
-
-
-            if (articles.length == 0) {
-                showMessage("0 articles found.")
-            } else {
-                showMessage(articles.length + " article(s) found.")
-            }
+    }catch(err){
+        searchbarInput=testInput;
+    }            
+        
+    url=BASE_URL+"?$filter=contains(toupper(title),'"+searchbarInput+"') or contains(toupper(author),'"+searchbarInput+"')"; // TODO: Filter for SE Methods, TODO: Filter for date-range
+    if(!validateSearchbar(searchbarInput)){
+        return;
+    }
+    var client = new HttpClient();// Calling api to get atricles.
+    client.get(url, function (response) {
+        var articlesJSON = JSON.parse(response);
+        articlesJSON.forEach(element => {
+            articles.push(element);
         });
-    
+        if (articles.length == 0) {
+            showMessage("0 articles found.")
+        } else {
+            showMessage(articles.length + " article(s) found.")
+        }
+
+    });
+    return articles;
 }
 
 function btnSearch() {
@@ -71,25 +62,42 @@ function btnSearch() {
 
 function validateSearchbar(searchbarInput){
     var searchbar = document.getElementById("search-form");
-    searchbar.classList.remove("search-error");
-    if(searchbarInput==""){
-        searchbar.classList.add("search-error");
-        showMessage("Cannot be empty.","Error");
-        return false;
-    }
-    else if(searchbarInput.length<2){
-        searchbar.classList.add("search-error");
-        showMessage("Must be more than 2 or more characters.","Error");
-        return false;
-    }
-    else if(searchbarInput.length>120){
-        searchbar.classList.add("search-error");
-        showMessage("Must not be more than 120 characters.","Error");
-        return false;
+    try{
+        searchbar.classList.remove("search-error");
+    }catch(err){}
+    if(searchbarInput!=""){
+        if(searchbarInput.length<2){
+            try{
+                searchbar.classList.add("search-error");
+                showMessage("Must be more than 2 or more characters.","Error");
+            }catch(err){}
+            return false;
+        }
+        else if(searchbarInput.length>120){
+            try{
+                searchbar.classList.add("search-error");
+                showMessage("Must not be more than 120 characters.","Error");
+            }catch(err){}
+            return false;
+        }
     }
     return true;
 }
 
+function asss(ant)
+{
+    if(ant=="A"){
+    return false;
+}
+return true;
+}
 
-document.onload = searchbarOnEnter();
+//document.onload = searchbarOnEnter();
 
+
+//Exporting modules for testing.
+module.exports = {
+    validateSearchbar: validateSearchbar,
+    handleSearch: handleSearch
+
+};
