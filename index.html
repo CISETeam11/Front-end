@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+  <!-- Local JS -->
+  <script type='text/javascript' src="js/network.js"></script>
   <title>Software Engineering Evidence Repository</title>
 </head>
 
@@ -51,9 +54,9 @@
     <div class="row">
       <div class="col"></div>
       <div class="col-12 justify-content-center">
-        <form class="search-form">
-          <input type="search" value="" class="search-input">
-          <button type="submit" class="search-button" disabled onclick="hello()">
+        <form class="search-form" id="search-form">
+          <input type="search" value="" class="search-input" id="searchbar">
+          <button type="submit" class="search-button" disabled onclick="btnSearch()">
             <svg class="submit-button">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
             </svg>
@@ -68,6 +71,7 @@
       </div>
       <div class="col"></div>
     </div>
+
     <div class="row invisible" style="height: 50px"></div>
     <div class="row">
       <div class="col-1"></div>
@@ -96,7 +100,9 @@
       </div>
     </div>
   </div>
-    <div class="center">
+
+  <!--SE Methods-->
+  <div class="center">
       <div class="dropdown">
         <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
         <div class="dropdown-content">
@@ -117,9 +123,14 @@
       <button class="btn"><i class="fa fa-plus-circle"></i></button>
       <button class="btn"><i class="fa fa-times-circle"></i></button>
     </div>
-  
+  </div>
+
+  <!--Search Error message-->
+  <div class="center " id="error-msg"></div>
+
+  <!--Search button-->
   <div class="center">
-    <button id='search-btn' onclick="hello()">search</button>
+    <button id='search-btn' onclick="btnSearch()">search</button>
   </div>
 
 
@@ -149,5 +160,8 @@
     });
   </script>
 </body>
+
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/search.js"></script>
 
 </html>
