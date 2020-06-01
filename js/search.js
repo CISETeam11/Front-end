@@ -9,31 +9,30 @@ const vueTable = new Vue({
         sortDesc: false,
         articles: [],
         fields: [{
-                key: 'article.title',
-                label: 'Title',
-                sortable: true
-            },
-            {
-                key: 'article.author',
-                label: 'Author',
-                sortable: true
-            },
-            {
-                key: 'article.year',
-                label: 'Year',
-                sortable: true
-            },
-            {
-                key: 'article.doi',
-                label: 'DOI',
-                sortable: true
-            },
-            {
-                key: 'results.result',
-                label: 'Result',
-                sortable: true
-            }
-        ]
+            key: 'article.title',
+            label: 'Title',
+            sortable: true
+        },
+        {
+            key: 'article.author',
+            label: 'Author',
+            sortable: true
+        },
+        {
+            key: 'article.year',
+            label: 'Year',
+            sortable: true
+        },
+        {
+            key: 'article.doi',
+            label: 'DOI',
+            sortable: true
+        },
+        {
+            key: 'results.result',
+            label: 'Result',
+            sortable: true
+        }]
     }
 });
 
@@ -42,6 +41,7 @@ function showMessage(message, type) {
     var errorMessage = document.getElementById("error-msg");
     errorMessage.classList.remove("error-text");
     errorMessage.classList.remove("invisible");
+
     if (type == "Error") {
         errorMessage.classList.add("error-text");
         errorMessage.innerHTML = message;
@@ -56,7 +56,9 @@ function showMessage(message, type) {
 function searchbarOnEnter() {
     document.getElementById('searchbar').onkeypress = function (e) {
         if (!e) e = window.event;
+
         var keyCode = e.keyCode || e.which;
+
         if (keyCode == '13') {
             handleSearch();
             return false;
@@ -78,7 +80,12 @@ function handleSearch() {
     }
 
     // TODO: Filter for SE Methods, TODO: Filter for date-range
-    url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}') or contains(toupper(author),'${searchbarInput}')`;
+    url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
+    or contains(toupper(author),'${searchbarInput}')
+    or contains(toupper(doi),'${searchbarInput}')
+    or Results/any(a: contains(toupper(a/Result),'${searchbarInput}'))
+    or Results/any(a: contains(toupper(a/Method),'${searchbarInput}'))
+    or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
 
     vueTable.isBusy = true;
     var client = new HttpClient(); // Calling api to get atricles.
