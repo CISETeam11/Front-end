@@ -87,8 +87,8 @@ function handleSearch() {
         vueTable.articles = results;
         vueTable.isBusy = false;
         showMessage(articles.length + " article(s) found.");
-        var searchResult = document.getElementById("search_result");
-        searchResult.classList.remove("invisible");
+        //var searchResult = document.getElementById("search_result");
+        //searchResult.classList.remove("invisible");
     });
 }
 

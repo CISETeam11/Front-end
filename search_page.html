@@ -62,8 +62,8 @@
 
         <div class="row invisible" style="height: 50px"></div>
         <div class="row">
-            <div class="col-1"></div>
-            <div class="col-10 d-flex justify-content-center">
+            <div class="col-2"></div>
+            <div class="col-8 d-flex justify-content-center">
 
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker" data-target-input="nearest">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1"></div>
+                <div class="col-2"></div>
             </div>
         </div>
 
@@ -126,7 +126,7 @@
         <!-- search result -->
         <div class="row invisible" style="height: 50px"></div>
 
-        <div class="invisible" id="search_result" v-cloak>
+        <div class="" id="search_result" v-cloak>
             <template>
         <div>
           <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" 
