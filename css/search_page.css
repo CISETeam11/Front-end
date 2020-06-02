@@ -82,10 +82,6 @@ input[type=number] {
     margin-right: 42%;
 }
 
-.btn {
-    color: #5a6674;
-}
-
 .dropbtn {
     color: #5a6674;
     float: right;
@@ -151,8 +147,7 @@ input[type=number] {
 }
 
 .float-container{
-    width: 500px; 
-    margin: 0 auto; 
+    margin: 0 auto 16px auto; 
 }
 .float-container p{
     margin-left: 10px;

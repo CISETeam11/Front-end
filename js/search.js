@@ -1,7 +1,7 @@
 //:: Handles searchbar input :://
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
-const vueTable = new Vue({
+const resultsTable = new Vue({
     el: '#search_result',
     data: {
         isBusy: false,
@@ -33,6 +33,53 @@ const vueTable = new Vue({
             label: 'Result',
             sortable: true
         }]
+    }
+});
+
+const queryBuilder = new Vue({
+    el: '#query-builder',
+    data: {
+        form: {
+            field: null,
+            operator: null,
+            value: null
+        },
+        queryFields: [
+            { value: null, text: '- Select Field -', disabled: true },
+            { value: 'se-method', text: 'SE Method' },
+            { value: 'se-methodology', text: 'SE Methodology' }
+        ],
+        queryOperators: [
+            { value: null, text: '- Operator -', disabled: true },
+            { value: 'eq', text: 'Is Equal To' },
+            { value: 'contains', text: 'Contains' }
+        ],
+        queryValues: [
+            { value: null, text: '- Value -', disabled: true },
+            { value: 'tdd', text: 'TDD' },
+            { value: 'bdd', text: 'BDD' }
+        ],
+        show: true
+    },
+    methods: {
+        onSubmit(evt) {
+            evt.preventDefault()
+            //alert(JSON.stringify(this.form))
+            btnSearch();
+        },
+        onReset(evt) {
+            evt.preventDefault()
+            // Reset our form values
+            this.form.field = null
+            this.form.operator = null
+            this.form.value = null
+
+            // Trick to reset/clear native browser form validation state
+            this.show = false
+            this.$nextTick(() => {
+                this.show = true
+            })
+        }
     }
 });
 
@@ -87,17 +134,30 @@ function handleSearch() {
         $("#search_result").removeClass("invisible");
     }
 
+    let url = BASE_URL;
+
     // TODO: Filter for SE Methods, TODO: Filter for date-range
-    var url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
-    or contains(toupper(author),'${searchbarInput}')
-    or contains(toupper(doi),'${searchbarInput}')
-    or Results/any(a: contains(toupper(a/Result),'${searchbarInput}'))
-    or Results/any(a: contains(toupper(a/Method),'${searchbarInput}'))
-    or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+    if (searchbarInput.length > 0) {
+        url += `?$filter=contains(toupper(title),'${searchbarInput}') ` +
+        `or contains(toupper(author),'${searchbarInput}') ` +
+        `or contains(toupper(doi),'${searchbarInput}') ` +
+        `or Results/any(a: contains(toupper(a/Result),'${searchbarInput}')) ` +
+        `or Results/any(a: contains(toupper(a/Method),'${searchbarInput}')) ` +
+        `or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+    }
 
-    vueTable.isBusy = true;
-    var client = new HttpClient(); // Calling api to get atricles.
+    queryArticles(url);
+}
 
+function generateSearchQuery() {
+    
+}
+
+function queryArticles(url) {
+    resultsTable.isBusy = true;
+    var client = new HttpClient();
+
+    // Calling api to get articles.
     client.get(url, function(response) {
         const articles = JSON.parse(response);
         let results = [];
@@ -108,8 +168,8 @@ function handleSearch() {
             });
         });
 
-        vueTable.articles = results;
-        vueTable.isBusy = false;
+        resultsTable.articles = results;
+        resultsTable.isBusy = false;
         showMessage(articles.length + " article(s) found.");
     });
 }

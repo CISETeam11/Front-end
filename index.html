@@ -42,7 +42,8 @@
 				<img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
 			</div>
 			<div class="col-3"></div>
-		</div>
+        </div>
+        
 		<div class="row invisible" style="height: 50px"></div>
 		<div class="row">
 			<div class="col"></div>
@@ -84,48 +85,34 @@
             </div>
         </div>
         
-        <!--SE methods-->
-        <div class="row invisible" style="height: 50px"></div>
-        <div class="d-flex justify-content-center" id="se-methods">
-            <div class="dropdown">
-                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
-                <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Operator</button>
-                <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
-                </div>
-            </div>
-            <input size="1" type="number" placeholder="value">
-            <button class="btn"><i class="fa fa-plus-circle" onclick="addSE_method()"></i></button>
-            <button class="btn"><i class="fa fa-times-circle" onclick="removeSE_method()"></i></button>
+        <!--Query builder-->
+        <div class="row invisible" style="height: 20px"></div>
+        <div class="d-flex justify-content-center" id="query-builder">
+            <template>
+                <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="w-50">
+                    <b-input-group id="search-query" class="form-group">
+                        <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
+                        <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
+                        <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
+                        <button class="btn"><i class="fa fa-times-circle"></i></button>
+                    </b-input-group>
+                    <div class="d-flex justify-content-center mt-5">
+                        <b-button class="col-5 btn-lg mr-4" type="submit" variant="primary">Search</b-button>
+                        <b-button class="btn-lg" type="reset" variant="outline-danger">Reset</b-button>
+                    </div>
+                </b-form>
+            </template>            
         </div>
 
         <div class="row invisable" style="height: 20px"></div>
+
         <!--Search Error message-->
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4 alert invisible text-center" role="alert" id="error-msg"></div>
-            <div class="col-4"></div>
+            <div class="col-4 float-container d-flex justify-content-center alert invisible text-center" role="alert" id="error-msg"></div>
         </div>
-        <!--Search button-->
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <button class="btn btn-primary btn-lg btn-block" id='search-btn' onclick="btnSearch()">Search</button>
-            </div>
-            <div class="col-4"></div>
-        </div>
+
         <!-- search result -->
         <div class="row invisible" style="height: 50px"></div>
-
         <div id="search_result" class="invisible">
             <template>
 				<div>
