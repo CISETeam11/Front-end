@@ -159,4 +159,20 @@ input[type=number] {
     width: 50%;
     
 }
+
+[v-cloak] {
+    display: none !important;
+}
+
+.rounded-1 {
+    border-radius: 1rem;
+}
+
+.w-60 {
+    width: 60%!important;
+}
+
+.w-80 {
+    width: 80%!important;
+}
 /***********************************/

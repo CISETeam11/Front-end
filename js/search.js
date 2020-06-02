@@ -36,8 +36,8 @@ const resultsTable = new Vue({
     }
 });
 
-const queryBuilder = new Vue({
-    el: '#query-builder',
+const advancedSearch = new Vue({
+    el: '#advanced-search',
     data: {
         form: {
             field: null,
@@ -59,13 +59,15 @@ const queryBuilder = new Vue({
             { value: 'tdd', text: 'TDD' },
             { value: 'bdd', text: 'BDD' }
         ],
-        show: true
+        show: true,
+        visible: false
     },
     methods: {
         onSubmit(evt) {
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
             btnSearch();
+            this.visible = false;
         },
         onReset(evt) {
             evt.preventDefault()
