@@ -135,7 +135,7 @@ const advancedSearch = new Vue({
         onSubmit(evt) {
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
-            btnSearch();
+            handleSearch();
             this.visible = false;
         },
         onReset(evt) {
@@ -213,17 +213,10 @@ function handleSearch() {
         `or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
     }
 
-    queryArticles(url);
+    queryArticles(url, searchbarInput);
 }
 
-function addQuery(){
-    var queryWrapper = document.getElementById('query-wrapper');
-    var query = document.getElementById('query');
-    queryWrapper.innerHTML+=query.innerHTML;
-
-}
-
-function queryArticles(url) {
+function queryArticles(url, resultFilter) {
     resultsTable.isBusy = true;
     var client = new HttpClient();
 
@@ -234,6 +227,9 @@ function queryArticles(url) {
 
         articles.forEach(article => {
             article.results.forEach(result => {
+                if (!filterResults(article, result, resultFilter))
+                    return;
+                
                 results.push({ results: result, article: article });
             });
         });
@@ -244,13 +240,38 @@ function queryArticles(url) {
     });
 }
 
+function filterResults(article, result, resultFilter) {
+    let hasValue = false;
+
+    Object.values(article).forEach(value => {
+        if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter)) {
+            hasValue = true;
+            return;
+        }
+    });
+
+    if (hasValue)
+        return true
+
+    Object.values(result).forEach(value => {
+        if (value && value.toUpperCase().includes(resultFilter)) {
+            hasValue = true;
+            return;
+        }
+    });
+
+    return hasValue;
+}
+
+function addQuery(){
+    var queryWrapper = document.getElementById('query-wrapper');
+    var query = document.getElementById('query');
+    queryWrapper.innerHTML+=query.innerHTML;
+}
+
 function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
-}
-
-function btnSearch() {
-    handleSearch();
 }
 
 function validateSearchbar(searchbarInput) {
