@@ -4,13 +4,18 @@ const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 const vueTable = new Vue({
     el: '#search_result',
     data: {
+        stitle: true,
+        sauthor: true,
+        syear: true,
+        sdoi: true,
+        smethod: false,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
         articles: [],
         fields: [{
-            key: 'article.title',
-            label: 'Title',
+            key: "article.title",
+            label: "Title",
             sortable: true
         },
         {
@@ -33,6 +38,69 @@ const vueTable = new Vue({
             label: 'Result',
             sortable: true
         }]
+    },
+    // check checkbox status and display column //
+    watch: {
+        stitle: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 0, [{
+                    key: "article.title",
+                    label: "Title",
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 0, []);
+            }
+        },
+        sauthor: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 1, [{
+                    key: 'article.author',
+                    label: 'Author',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 1, []);
+            }
+        },
+        syear: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 2, [{
+                    key: 'article.year',
+                    label: 'Year',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 2, []);
+            }
+        },
+        sdoi: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 3, [{
+                    key: 'article.doi',
+                    label: 'DOI',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 3, []);
+            }
+        },
+        smethod: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 5, [{
+                    key: 'results.method',
+                    label: 'Method',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 5, []);
+            }
+        }
     }
 });
 
@@ -72,12 +140,12 @@ function searchbarOnEnter() {
 
 //:: A function to get input from searchbar to get results from API :://
 function handleSearch() {
-    try{
+    try {
         var searchbarInput = document.getElementsByClassName('search-input')[0].value;
         searchbarInput = searchbarInput.toUpperCase();
-    } catch(err) {
+    } catch (err) {
         searchbarInput = testInput;
-    }    
+    }
 
     if (!validateSearchbar(searchbarInput)) {
         return;
@@ -98,7 +166,7 @@ function handleSearch() {
     vueTable.isBusy = true;
     var client = new HttpClient(); // Calling api to get atricles.
 
-    client.get(url, function(response) {
+    client.get(url, function (response) {
         const articles = JSON.parse(response);
         let results = [];
 
@@ -114,33 +182,32 @@ function handleSearch() {
     });
 }
 
-function gotoBottom(id){
+function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
- }
+}
 
 function btnSearch() {
     handleSearch();
 }
 
-function validateSearchbar(searchbarInput){
+function validateSearchbar(searchbarInput) {
     var searchbar = document.getElementById("search-form");
-    try{
+    try {
         searchbar.classList.remove("search-error");
-    }catch(err){}
-    if(searchbarInput!=""){
-        if(searchbarInput.length<2){
-            try{
+    } catch (err) { }
+    if (searchbarInput != "") {
+        if (searchbarInput.length < 2) {
+            try {
                 searchbar.classList.add("search-error");
-                showMessage("Must be more than 2 or more characters.","Error");
-            }catch(err){}
+                showMessage("Must be more than 2 or more characters.", "Error");
+            } catch (err) { }
             return false;
-        }
-        else if(searchbarInput.length>120){
-            try{
+        } else if (searchbarInput.length > 120) {
+            try {
                 searchbar.classList.add("search-error");
-                showMessage("Must not be more than 120 characters.","Error");
-            }catch(err){}
+                showMessage("Must not be more than 120 characters.", "Error");
+            } catch (err) { }
             return false;
         }
     }
