@@ -248,10 +248,10 @@ function filterResults(article, result, resultFilter) {
     let hasValue = false;
 
     Object.values(article).forEach(value => {
-        if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter)) {
+        if (parseInt(resultFilter) == article.year) {
             hasValue = true;
             return;
-        } else if (parseInt(value) == article.year) {
+        } else if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter)) {
             hasValue = true;
             return;
         }
