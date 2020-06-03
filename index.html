@@ -44,6 +44,7 @@
 			<div class="col-3"></div>
         </div>
         
+        <!-- Quick search -->
 		<div class="row invisible" style="height: 70px"></div>
 		<div class="row">
 			<div class="col-12 justify-content-center">
@@ -66,7 +67,9 @@
 
         <!-- Advanced search -->
         <div id="advanced-search" class="mt-5">
-            <b-button v-b-toggle.advanced-search-card variant="outline-primary" v-cloak class="float-container d-flex justify-content-center">Advanced Search</b-button>
+            <div class="float-container d-flex justify-content-center">
+                <b-button v-b-toggle.advanced-search-card variant="link" v-cloak class="no-outline">{{visible ? '-' : '+'}} Advanced Search</b-button>
+            </div>
             <template>
                 <b-collapse id="advanced-search-card" v-model="visible" class="mt-2 w-80 float-container justify-content-center">
                     <b-card class="rounded-1" style="background-color: rgba(0,0,0,.05);">
@@ -89,8 +92,7 @@
                         </div>
                         
                         <!-- Query builder -->
-                        <div class="row invisible" style="height: 20px"></div>
-                        <div class="d-flex justify-content-center" id="query-builder">
+                        <div class="d-flex justify-content-center mt-3" id="query-builder">
                             <template>
                                 <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="w-80">
                                     <b-input-group id="search-query" class="form-group">
@@ -100,7 +102,7 @@
                                         <button class="btn"><i class="fa fa-times-circle"></i></button>
                                     </b-input-group>
                                     <div class="d-flex justify-content-center mt-5">
-                                        <b-button class="col-5 btn-lg mr-4" type="submit" variant="primary">Search</b-button>
+                                        <b-button class="col-5 btn-lg mr-4 no-outline" type="submit" variant="primary">Search</b-button>
                                         <b-button class="btn-lg" type="reset" variant="outline-danger">Reset</b-button>
                                     </div>
                                 </b-form>
@@ -123,7 +125,7 @@
             <template>
 				<div>
 					<b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-						striped hover bordered responsive show-empty thead-class="user-select-none">
+						striped hover bordered responsive show-empty thead-class="user-select-none" thead-tr-class="no-outline">
 
 						<!-- Table loading spinner-->
 						<template v-slot:table-busy>

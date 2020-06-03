@@ -175,4 +175,16 @@ input[type=number] {
 .w-80 {
     width: 80%!important;
 }
+
+.no-outline:focus,
+tr.no-outline > th:focus {
+    box-shadow: none;
+    outline: 0;
+}
+
+.no-underline,
+.no-underline:focus,
+.no-underline:hover {
+    text-decoration: none;
+}
 /***********************************/

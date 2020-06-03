@@ -60,7 +60,8 @@ const advancedSearch = new Vue({
             { value: 'bdd', text: 'BDD' }
         ],
         show: true,
-        visible: false
+        visible: false,
+        collapseIndicator: true ? "+" : "-"
     },
     methods: {
         onSubmit(evt) {
