@@ -2,9 +2,10 @@
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
 Vue.component('insert-title', {
+    props: ['select_title'],
     template: `
     <div>
-    <input type="checkbox" @click='$emit("insert-title")'>Title</input> 
+    <input type="checkbox" @click='$emit("insert-title", true)' v-model="select_title" :value="select_title" >Title</input> 
     </div>
     `
 });
@@ -42,6 +43,7 @@ Vue.component('insert-result', {
 const vueTable = new Vue({
     el: '#search_result',
     data: {
+        select_title: true,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
@@ -75,11 +77,13 @@ const vueTable = new Vue({
     },
     methods: {
         title: function() {
-            this.fields = [{
-                key: "article.title",
-                label: "Title",
-                sortable: true
-            }, ]
+            if (select_title) {
+                this.fields = [{
+                    key: "article.title",
+                    label: "Title",
+                    sortable: true
+                }, ]
+            }
 
         },
         author: function() {
@@ -114,6 +118,12 @@ const vueTable = new Vue({
             }]
 
         },
+    },
+    watch: {
+        select_title: function(val) {
+            console.log(val)
+
+        }
     }
 
 });
