@@ -92,16 +92,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <b-input-group id="search-query" class="form-group mt-4">
-                                        <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
-                                        <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
-                                        <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
-                                        <button class="btn"><i class="fa fa-times-circle"></i></button>
-                                    </b-input-group>
-
+                                    <div id="query-wrapper">
+                                        <div id="query">
+                                        <b-input-group id="search-query" class="form-group mt-4">
+                                            <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
+                                            <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
+                                            <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
+                                            <button class="btn"><i class="fa fa-times-circle"></i></button>
+                                        </b-input-group>
+                                        </div>
+                                    </div>
                                     <!-- Add new query button -->
                                     <div class="d-flex justify-content-center mt-5">
-                                        <b-button class="btn-sm no-outline" variant="outline-success">Add new query</b-button>
+                                        <b-button class="btn-sm no-outline" variant="outline-success" onclick="addQuery()">Add new query</b-button>
                                     </div>
 
                                     <!-- Form submission/reset buttons -->
