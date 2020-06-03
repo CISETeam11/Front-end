@@ -8,7 +8,6 @@ const vueTable = new Vue({
         sauthor: true,
         syear: true,
         sdoi: true,
-        sresult: true,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
@@ -40,6 +39,7 @@ const vueTable = new Vue({
         }
         ]
     },
+    // check checkbox status and display column //
     watch: {
         stitle: function (val) {
             if (val == true) {
@@ -88,18 +88,6 @@ const vueTable = new Vue({
             }
             else {
                 Vue.set(this.fields, 3, []);
-            }
-        },
-        sresult: function (val) {
-            if (val == true) {
-                Vue.set(this.fields, 4, [{
-                    key: 'results.result',
-                    label: 'Result',
-                    sortable: true
-                }])
-            }
-            else {
-                Vue.set(this.fields, 4, []);
             }
         }
     }

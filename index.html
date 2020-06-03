@@ -131,13 +131,12 @@
             <input type="checkbox" v-model="sauthor" >Author</input>
             <input type="checkbox" v-model="syear" >Year</input>
             <input type="checkbox" v-model="sdoi" >DOI</input>
-            <input type="checkbox" v-model="sresult" >Result</input>
             <div class="row">
             </div>
             <template>
 				<div>
 					<b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-						striped hover bordered responsive show-empty thead-class="user-select-none">
+						striped hover bordered responsive show-empty  thead-class="user-select-none">
 
 						<!-- Table loading spinner-->
 						<template v-slot:table-busy>
