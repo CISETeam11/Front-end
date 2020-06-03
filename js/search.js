@@ -155,6 +155,12 @@ function handleSearch() {
 function generateSearchQuery() {
     
 }
+function addQuery(){
+    var queryWrapper = document.getElementById('query-wrapper');
+    var query = document.getElementById('query');
+    queryWrapper.innerHTML+=query.innerHTML;
+
+}
 
 function queryArticles(url) {
     resultsTable.isBusy = true;
