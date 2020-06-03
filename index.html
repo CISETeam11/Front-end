@@ -23,15 +23,15 @@
 </head>
 
 <body>
-  	<div class="row mt-1"></div>
+    <div class="row mt-1"></div>
     <ul class="nav justify-content-end">
         <li class="nav-item mx-2">
             <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
         </li>
         <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
-		<li class="nav-item mx-2">
-			<p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
-		</li>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
+        </li>
     </ul>
 
 	<div class="container">
@@ -122,6 +122,11 @@
 
         <!-- Search result -->
         <div id="search_result" class="no-display my-5">
+            <input type="checkbox" v-model="stitle" >Title</input>
+            <input type="checkbox" v-model="sauthor" >Author</input>
+            <input type="checkbox" v-model="syear" >Year</input>
+            <input type="checkbox" v-model="sdoi" >DOI</input>
+            <input type="checkbox" v-model="smethod" >Method</input>
             <template>
                 <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" striped hover
                     bordered responsive show-empty thead-class="user-select-none" thead-tr-class="table-primary-custom no-outline">
