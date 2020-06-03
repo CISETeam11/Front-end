@@ -14,6 +14,7 @@ const resultsTable = new Vue({
         sortDesc: false,
         articles: [],
         isEmpty: true,
+        lastQueryUrl: null,
         fields: [{
             key: "article.title",
             label: "Title",
@@ -105,7 +106,7 @@ const resultsTable = new Vue({
     }
 });
 
-const advancedSearch = new Vue({
+const advancedSearchForm = new Vue({
     el: '#advanced-search',
     data: {
         form: {
@@ -135,7 +136,7 @@ const advancedSearch = new Vue({
         onSubmit(evt) {
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
-            handleSearch();
+            advancedSearch();
             this.visible = false;
         },
         onReset(evt) {
@@ -178,23 +179,16 @@ document.getElementById('searchbar').onkeypress = function (e) {
     var keyCode = e.keyCode || e.which;
 
     if (keyCode == '13') {
-        handleSearch();
+        const searchInput = $('#searchbar').val();
+        quickSearch(searchInput);
         return false;
     }
 }
 
 
 //:: A function to get input from searchbar to get results from API :://
-function handleSearch() {
-    let searchbarInput = document.getElementsByClassName('search-input')[0].value;
-    
-    try {
-        searchbarInput = searchbarInput.toUpperCase();
-    } catch (err) {
-        
-    }
-
-    if (!validateSearchbar(searchbarInput)) {
+function quickSearch(searchInput) {    
+    if (!validateSearchbar(searchInput)) {
         return;
     }
 
@@ -204,24 +198,33 @@ function handleSearch() {
 
     let url = BASE_URL;
 
-    if (searchbarInput.length > 0) {
-        if (parseInt(searchbarInput)) {
-            url += `?$filter=year eq ${parseInt(searchbarInput)}`;
-        } else if (typeof(searchbarInput) == "string") {
-            url += `?$filter=contains(toupper(title),'${searchbarInput}') ` +
-            `or contains(toupper(author),'${searchbarInput}') ` +
-            `or contains(toupper(doi),'${searchbarInput}') ` +
-            `or Results/any(a: contains(toupper(a/Result),'${searchbarInput}')) ` +
-            `or Results/any(a: contains(toupper(a/Method),'${searchbarInput}')) ` +
-            `or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+    if (searchInput.length > 0) {
+        if (Number.isInteger(Number(searchInput))) {
+            url += `?$filter=year eq ${parseInt(searchInput)}`;
+        } else if (typeof(searchInput) == "string") {
+            searchInput = searchInput.toUpperCase();
+            url += `?$filter=contains(toupper(title),'${searchInput}') ` +
+            `or contains(toupper(author),'${searchInput}') ` +
+            `or contains(toupper(doi),'${searchInput}') ` +
+            `or Results/any(a: contains(toupper(a/Result),'${searchInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Method),'${searchInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Methodology),'${searchInput}'))`;
         } 
     }
 
-    queryArticles(url, searchbarInput);
+    queryArticles(url, searchInput);
+}
+
+function advancedSearch() {
+
 }
 
 function queryArticles(url, resultFilter) {
+    if (resultsTable.lastQueryUrl == url)
+        return;
+    
     resultsTable.isBusy = true;
+    resultsTable.lastQueryUrl = url;
     var client = new HttpClient();
 
     // Calling api to get articles.
@@ -309,5 +312,5 @@ function validateSearchbar(searchbarInput) {
 //Exporting modules for testing.
 module.exports = {
     validateSearchbar: validateSearchbar,
-    handleSearch: handleSearch
+    quickSearch: quickSearch
 };
