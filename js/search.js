@@ -90,7 +90,7 @@ const advancedSearch = new Vue({
 function showMessage(message, type) {
     var errorMessage = document.getElementById("error-msg");
     errorMessage.classList.remove("error-text");
-    errorMessage.classList.remove("invisible");
+    errorMessage.classList.remove("no-display");
     errorMessage.classList.remove("alert-danger");
     errorMessage.classList.remove("alert-success");
 
@@ -133,8 +133,8 @@ function handleSearch() {
         return;
     }
 
-    if ($("#search_result").hasClass("invisible")) {
-        $("#search_result").removeClass("invisible");
+    if ($("#search_result").hasClass("no-display")) {
+        $("#search_result").removeClass("no-display");
     }
 
     let url = BASE_URL;

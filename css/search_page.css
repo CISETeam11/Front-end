@@ -147,19 +147,21 @@ input[type=number] {
 }
 
 .float-container{
-    margin: 0 auto 16px auto; 
+    margin: auto; 
 }
+
 .float-container p{
     margin-left: 10px;
     margin-right: 10px;
     line-height: 25px;
 }
+
 .date{
     float: left;
     width: 50%;
-    
 }
 
+.no-display,
 [v-cloak] {
     display: none !important;
 }
@@ -174,6 +176,14 @@ input[type=number] {
 
 .w-80 {
     width: 80%!important;
+}
+
+.mt-100 {
+    margin-top: 100px;
+}
+
+.mt-70 {
+    margin-top: 70px;
 }
 
 .no-outline:focus,

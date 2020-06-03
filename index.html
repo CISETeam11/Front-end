@@ -35,18 +35,14 @@
     </ul>
 
 	<div class="container">
-		<div class="row invisible" style="height: 100px"></div>
-		<div class="row">
-			<div class="col-3"></div>
-			<div class="col-6 justify-content-center">
+		<div class="row mt-100">
+			<div class="col-6 float-container d-flex justify-content-center">
 				<img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
 			</div>
-			<div class="col-3"></div>
         </div>
         
         <!-- Quick search -->
-		<div class="row invisible" style="height: 70px"></div>
-		<div class="row">
+		<div class="row mt-70">
 			<div class="col-12 justify-content-center">
 				<form class="search-form" id="search-form">
 					<input type="search" placeholder="Search by title, author, doi or results" class="search-input" id="searchbar">
@@ -72,35 +68,43 @@
             </div>
             <template>
                 <b-collapse id="advanced-search-card" v-model="visible" class="mt-2 w-80 float-container justify-content-center">
-                    <b-card class="rounded-1" style="background-color: rgba(0,0,0,.05);">
-                        <div class="row mt-2">
-                            <div class="float-container d-flex justify-content-center">
-                                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" placeholder="Any" />
-                                    <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                                <p>to</p>
-                                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="Any" />
-                                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <b-card class="rounded-1" style="background-color: #f5f5f5;">
                         
                         <!-- Query builder -->
-                        <div class="d-flex justify-content-center mt-3" id="query-builder">
+                        <div class="d-flex justify-content-center mt-2" id="query-builder">
                             <template>
                                 <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="w-80">
-                                    <b-input-group id="search-query" class="form-group">
+                                    <!-- Search query group-->
+                                    <div class="row">
+                                        <div class="float-container d-flex justify-content-center">
+                                            <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" placeholder="Any" />
+                                                <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                            <p>to</p>
+                                            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="Any" />
+                                                <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <b-input-group id="search-query" class="form-group mt-4">
                                         <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
                                         <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
                                         <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
                                         <button class="btn"><i class="fa fa-times-circle"></i></button>
                                     </b-input-group>
+
+                                    <!-- Add new query button -->
+                                    <div class="d-flex justify-content-center mt-5">
+                                        <b-button class="btn-sm no-outline" variant="outline-success">Add new query</b-button>
+                                    </div>
+
+                                    <!-- Form submission/reset buttons -->
                                     <div class="d-flex justify-content-center mt-5">
                                         <b-button class="col-5 btn-lg mr-4 no-outline" type="submit" variant="primary">Search</b-button>
                                         <b-button class="btn-lg" type="reset" variant="outline-danger">Reset</b-button>
@@ -114,40 +118,33 @@
 	    </div>
 
         <!-- Search Error message -->
-        <div class="row invisable" style="height: 20px"></div>
-        <div class="row">
-            <div class="col-4 float-container d-flex justify-content-center alert invisible text-center" role="alert" id="error-msg"></div>
-        </div>
+        <div id="error-msg" role="alert" class="col-4 mt-4 float-container d-flex justify-content-center alert no-display text-center"></div>
 
         <!-- Search result -->
-        <div class="row invisible" style="height: 50px"></div>
-        <div id="search_result" class="invisible">
+        <div id="search_result" class="no-display my-5">
             <template>
-				<div>
-					<b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-						striped hover bordered responsive show-empty thead-class="user-select-none" thead-tr-class="no-outline">
+                <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+                    striped hover bordered responsive show-empty thead-class="user-select-none" thead-tr-class="no-outline">
 
-						<!-- Table loading spinner-->
-						<template v-slot:table-busy>
-							<div class="text-center text-danger my-2">
-								<b-spinner class="align-middle"></b-spinner>
-								<strong>Loading...</strong>
-							</div>
-                        </template>
-                        
-                        <!-- Empty results-->
-                        <template v-slot:empty="scope">
-                            <h4 class="text-center">No Results Found!</h4>
-                        </template>
+                    <!-- Table loading spinner-->
+                    <template v-slot:table-busy>
+                        <div class="text-center text-danger my-2">
+                            <b-spinner class="align-middle"></b-spinner>
+                            <strong>Loading...</strong>
+                        </div>
+                    </template>
+                    
+                    <!-- Empty results-->
+                    <template v-slot:empty="scope">
+                        <h4 class="text-center">No Results Found!</h4>
+                    </template>
 
-						<template v-slot:cell(article.doi)="data">
-							<a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
-						</template>
-					</b-table>
-				</div>
+                    <template v-slot:cell(article.doi)="data">
+                        <a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
+                    </template>
+                </b-table>
 			</template>
         </div>
-        <div class="row invisible" style="height: 50px"></div>
     </div>
 </body>
 
