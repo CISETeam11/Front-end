@@ -186,11 +186,12 @@ document.getElementById('searchbar').onkeypress = function (e) {
 
 //:: A function to get input from searchbar to get results from API :://
 function handleSearch() {
+    let searchbarInput = document.getElementsByClassName('search-input')[0].value;
+    
     try {
-        var searchbarInput = document.getElementsByClassName('search-input')[0].value;
         searchbarInput = searchbarInput.toUpperCase();
     } catch (err) {
-        searchbarInput = testInput;
+        
     }
 
     if (!validateSearchbar(searchbarInput)) {
@@ -203,14 +204,17 @@ function handleSearch() {
 
     let url = BASE_URL;
 
-    // TODO: Filter for SE Methods, TODO: Filter for date-range
     if (searchbarInput.length > 0) {
-        url += `?$filter=contains(toupper(title),'${searchbarInput}') ` +
-        `or contains(toupper(author),'${searchbarInput}') ` +
-        `or contains(toupper(doi),'${searchbarInput}') ` +
-        `or Results/any(a: contains(toupper(a/Result),'${searchbarInput}')) ` +
-        `or Results/any(a: contains(toupper(a/Method),'${searchbarInput}')) ` +
-        `or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+        if (parseInt(searchbarInput)) {
+            url += `?$filter=year eq ${parseInt(searchbarInput)}`;
+        } else if (typeof(searchbarInput) == "string") {
+            url += `?$filter=contains(toupper(title),'${searchbarInput}') ` +
+            `or contains(toupper(author),'${searchbarInput}') ` +
+            `or contains(toupper(doi),'${searchbarInput}') ` +
+            `or Results/any(a: contains(toupper(a/Result),'${searchbarInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Method),'${searchbarInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+        } 
     }
 
     queryArticles(url, searchbarInput);
@@ -245,6 +249,9 @@ function filterResults(article, result, resultFilter) {
 
     Object.values(article).forEach(value => {
         if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter)) {
+            hasValue = true;
+            return;
+        } else if (parseInt(value) == article.year) {
             hasValue = true;
             return;
         }
