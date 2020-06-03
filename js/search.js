@@ -1,128 +1,106 @@
 //:: Handles searchbar input :://
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
-Vue.component('insert-title', {
-    props: ['select_title'],
-    template: `
-    <div>
-    <input type="checkbox" @click='$emit("insert-title", true)' v-model="select_title" :value="select_title" >Title</input> 
-    </div>
-    `
-});
-
-Vue.component('insert-author', {
-    template: `
-    <div> 
-    <input type="checkbox" @click='$emit("insert-author")' >Author</input>
-    </div>
-    `
-});
-Vue.component('insert-year', {
-    template: `
-    <div>
-    <input type="checkbox" @click='$emit("insert-year")' >Year</input>
-    </div>
-    `
-});
-Vue.component('insert-doi', {
-    template: `
-    <div>
-    <input type="checkbox" @click='$emit("insert-doi")' >DOI</input>
-    </div>
-    `
-});
-Vue.component('insert-result', {
-    template: `
-    <div>
-    <input type="checkbox" @click='$emit("insert-result")' >Result</input>
-    </div>
-    `
-});
-
-
 const vueTable = new Vue({
     el: '#search_result',
     data: {
-        select_title: true,
+        stitle: true,
+        sauthor: true,
+        syear: true,
+        sdoi: true,
+        sresult: true,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
         articles: [],
         fields: [{
-                key: "article.title",
-                label: "Title",
-                sortable: true
-            },
-            {
-                key: 'article.author',
-                label: 'Author',
-                sortable: true
-            },
-            {
-                key: 'article.year',
-                label: 'Year',
-                sortable: true
-            },
-            {
-                key: 'article.doi',
-                label: 'DOI',
-                sortable: true
-            },
-            {
-                key: 'results.result',
-                label: 'Result',
-                sortable: true
-            }
+            key: "article.title",
+            label: "Title",
+            sortable: true
+        },
+        {
+            key: 'article.author',
+            label: 'Author',
+            sortable: true
+        },
+        {
+            key: 'article.year',
+            label: 'Year',
+            sortable: true
+        },
+        {
+            key: 'article.doi',
+            label: 'DOI',
+            sortable: true
+        },
+        {
+            key: 'results.result',
+            label: 'Result',
+            sortable: true
+        }
         ]
     },
-    methods: {
-        title: function() {
-            if (select_title) {
-                this.fields = [{
+    watch: {
+        stitle: function (val) {
+            if (val == true) {
+                Vue.set(this.fields, 0, [{
                     key: "article.title",
                     label: "Title",
                     sortable: true
-                }, ]
+                },])
             }
-
+            else {
+                Vue.set(this.fields, 0, []);
+            }
         },
-        author: function() {
-            this.fields = [{
-                key: 'article.author',
-                label: 'Author',
-                sortable: true
-            }, ]
+        sauthor: function (val) {
+            if (val == true) {
 
+                Vue.set(this.fields, 1, [{
+                    key: 'article.author',
+                    label: 'Author',
+                    sortable: true
+                },])
+            }
+            else {
+                Vue.set(this.fields, 1, []);
+            }
         },
-        year: function() {
-            this.fields = [{
-                key: 'article.year',
-                label: 'Year',
-                sortable: true
-            }, ]
-
+        syear: function (val) {
+            if (val == true) {
+                Vue.set(this.fields, 2, [{
+                    key: 'article.year',
+                    label: 'Year',
+                    sortable: true
+                },])
+            }
+            else {
+                Vue.set(this.fields, 2, []);
+            }
         },
-        doi: function() {
-            this.fields = [{
-                key: 'article.doi',
-                label: 'DOI',
-                sortable: true
-            }, ]
-
+        sdoi: function (val) {
+            if (val == true) {
+                Vue.set(this.fields, 3, [{
+                    key: 'article.doi',
+                    label: 'DOI',
+                    sortable: true
+                },])
+            }
+            else {
+                Vue.set(this.fields, 3, []);
+            }
         },
-        result: function() {
-            this.fields = [{
-                key: 'results.result',
-                label: 'Result',
-                sortable: true
-            }]
-
-        },
-    },
-    watch: {
-        select_title: function(val) {
-            console.log(val)
-
+        sresult: function (val) {
+            if (val == true) {
+                Vue.set(this.fields, 4, [{
+                    key: 'results.result',
+                    label: 'Result',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 4, []);
+            }
         }
     }
 
@@ -150,7 +128,7 @@ function showMessage(message, type) {
 
 //:: A fuction to handle pressing enter while focues on search bar :://
 function searchbarOnEnter() {
-    document.getElementById('searchbar').onkeypress = function(e) {
+    document.getElementById('searchbar').onkeypress = function (e) {
         if (!e) e = window.event;
 
         var keyCode = e.keyCode || e.which;
@@ -190,7 +168,7 @@ function handleSearch() {
     vueTable.isBusy = true;
     var client = new HttpClient(); // Calling api to get atricles.
 
-    client.get(url, function(response) {
+    client.get(url, function (response) {
         const articles = JSON.parse(response);
         let results = [];
 
@@ -219,19 +197,19 @@ function validateSearchbar(searchbarInput) {
     var searchbar = document.getElementById("search-form");
     try {
         searchbar.classList.remove("search-error");
-    } catch (err) {}
+    } catch (err) { }
     if (searchbarInput != "") {
         if (searchbarInput.length < 2) {
             try {
                 searchbar.classList.add("search-error");
                 showMessage("Must be more than 2 or more characters.", "Error");
-            } catch (err) {}
+            } catch (err) { }
             return false;
         } else if (searchbarInput.length > 120) {
             try {
                 searchbar.classList.add("search-error");
                 showMessage("Must not be more than 120 characters.", "Error");
-            } catch (err) {}
+            } catch (err) { }
             return false;
         }
     }

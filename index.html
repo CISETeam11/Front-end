@@ -127,11 +127,11 @@
         <div class="row invisible" style="height: 50px"></div>
 
         <div id="search_result" class="invisible">
-            <insert-title @insert-title='title'></insert-title>
-            <insert-author @insert-author='author'></insert-author>
-            <insert-year @insert-year='year'></insert-year>
-            <insert-doi @insert-doi='doi'></insert-doi>
-            <insert-result @insert-result='result'></insert-result>
+            <input type="checkbox" v-model="stitle" >Title</input>
+            <input type="checkbox" v-model="sauthor" >Author</input>
+            <input type="checkbox" v-model="syear" >Year</input>
+            <input type="checkbox" v-model="sdoi" >DOI</input>
+            <input type="checkbox" v-model="sresult" >Result</input>
             <div class="row">
             </div>
             <template>
