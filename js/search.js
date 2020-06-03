@@ -8,6 +8,7 @@ const vueTable = new Vue({
         sauthor: true,
         syear: true,
         sdoi: true,
+        smethod: false,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
@@ -36,62 +37,71 @@ const vueTable = new Vue({
             key: 'results.result',
             label: 'Result',
             sortable: true
-        }
-        ]
+        }]
     },
     // check checkbox status and display column //
     watch: {
-        stitle: function (val) {
-            if (val == true) {
+        stitle: function (isChecked) {
+            if (isChecked) {
                 Vue.set(this.fields, 0, [{
                     key: "article.title",
                     label: "Title",
                     sortable: true
-                },])
+                }])
             }
             else {
                 Vue.set(this.fields, 0, []);
             }
         },
-        sauthor: function (val) {
-            if (val == true) {
-
+        sauthor: function (isChecked) {
+            if (isChecked) {
                 Vue.set(this.fields, 1, [{
                     key: 'article.author',
                     label: 'Author',
                     sortable: true
-                },])
+                }])
             }
             else {
                 Vue.set(this.fields, 1, []);
             }
         },
-        syear: function (val) {
-            if (val == true) {
+        syear: function (isChecked) {
+            if (isChecked) {
                 Vue.set(this.fields, 2, [{
                     key: 'article.year',
                     label: 'Year',
                     sortable: true
-                },])
+                }])
             }
             else {
                 Vue.set(this.fields, 2, []);
             }
         },
-        sdoi: function (val) {
-            if (val == true) {
+        sdoi: function (isChecked) {
+            if (isChecked) {
                 Vue.set(this.fields, 3, [{
                     key: 'article.doi',
                     label: 'DOI',
                     sortable: true
-                },])
+                }])
             }
             else {
                 Vue.set(this.fields, 3, []);
             }
+        },
+        smethod: function (isChecked) {
+            if (isChecked) {
+                Vue.set(this.fields, 5, [{
+                    key: 'results.method',
+                    label: 'Method',
+                    sortable: true
+                }])
+            }
+            else {
+                Vue.set(this.fields, 5, []);
+            }
         }
     }
-
 });
 
 //:: A simple function to show user messages ::/
