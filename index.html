@@ -62,7 +62,7 @@
 		</div>
 
         <!-- Advanced search -->
-        <div id="advanced-search" class="mt-5">
+        <div id="advanced-search" class="mt-5 mb-4">
             <div class="float-container d-flex justify-content-center">
                 <b-button v-b-toggle.advanced-search-card variant="link" v-cloak class="no-outline">{{visible ? '-' : '+'}} Advanced Search</b-button>
             </div>
@@ -94,14 +94,15 @@
                                     </div>
                                     <div id="query-wrapper">
                                         <div id="query">
-                                        <b-input-group id="search-query" class="form-group mt-4">
-                                            <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
-                                            <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
-                                            <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
-                                            <button class="btn"><i class="fa fa-times-circle"></i></button>
-                                        </b-input-group>
+                                            <b-input-group id="search-query" class="form-group mt-4">
+                                                <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
+                                                <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
+                                                <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
+                                                <button class="btn"><i class="fa fa-times-circle"></i></button>
+                                            </b-input-group>
                                         </div>
                                     </div>
+                                    
                                     <!-- Add new query button -->
                                     <div class="d-flex justify-content-center mt-5">
                                         <b-button class="btn-sm no-outline" variant="outline-success" onclick="addQuery()">Add new query</b-button>
@@ -121,12 +122,21 @@
 	    </div>
 
         <!-- Search result -->
-        <div id="search_result" class="no-display my-5">
-            <input type="checkbox" v-model="stitle" >Title</input>
-            <input type="checkbox" v-model="sauthor" >Author</input>
-            <input type="checkbox" v-model="syear" >Year</input>
-            <input type="checkbox" v-model="sdoi" >DOI</input>
-            <input type="checkbox" v-model="smethod" >Method</input>
+        <div id="search_result" class="no-display mb-5 mt-2">
+            <!-- Column selector -->
+            <template>
+                <b-dropdown text="Select Columns" variant="secondary" class="mb-2 float-right">
+                    <div class="m-2">
+                        <b-form-checkbox v-model="stitle">Title</b-form-checkbox>
+                        <b-form-checkbox v-model="sauthor">Author</b-form-checkbox>
+                        <b-form-checkbox v-model="syear">Year</b-form-checkbox>
+                        <b-form-checkbox v-model="sdoi">DOI</b-form-checkbox>
+                        <b-form-checkbox v-model="smethod">Method</b-form-checkbox>
+                    </div>
+                </b-dropdown>
+            </template>
+            
+            <!-- Results table -->
             <template>
                 <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" striped hover
                     bordered responsive show-empty thead-class="user-select-none" thead-tr-class="table-primary-custom no-outline">
@@ -148,7 +158,8 @@
                         <a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
                     </template>
 
-                    <template v-if="displayFooter" v-slot:custom-foot="data">
+                    <!-- Table footer -->
+                    <template v-if="isEmpty === false" v-slot:custom-foot="data">
                         <b-tr>
                             <b-td colspan="7" class="table-primary-custom text-right">
                                 <b>{{data.items.length}}</b> results found

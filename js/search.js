@@ -13,7 +13,7 @@ const resultsTable = new Vue({
         sortBy: 'article.title',
         sortDesc: false,
         articles: [],
-        displayFooter: false,
+        isEmpty: true,
         fields: [{
             key: "article.title",
             label: "Title",
@@ -171,19 +171,18 @@ function showMessage(message, type) {
 
 }
 
-//:: A fuction to handle pressing enter while focues on search bar :://
-function searchbarOnEnter() {
-    document.getElementById('searchbar').onkeypress = function (e) {
-        if (!e) e = window.event;
+//:: Event handler pressing enter while focues on search bar :://
+document.getElementById('searchbar').onkeypress = function (e) {
+    if (!e) e = window.event;
 
-        var keyCode = e.keyCode || e.which;
+    var keyCode = e.keyCode || e.which;
 
-        if (keyCode == '13') {
-            handleSearch();
-            return false;
-        }
+    if (keyCode == '13') {
+        handleSearch();
+        return false;
     }
 }
+
 
 //:: A function to get input from searchbar to get results from API :://
 function handleSearch() {
@@ -240,7 +239,7 @@ function queryArticles(url) {
         });
 
         resultsTable.articles = results;
-        resultsTable.displayFooter = results.length > 0;
+        resultsTable.isEmpty = results.length == 0;
         resultsTable.isBusy = false;
     });
 }
