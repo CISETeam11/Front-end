@@ -197,4 +197,18 @@ tr.no-outline > th:focus {
 .no-underline:hover {
     text-decoration: none;
 }
+
+tr.table-primary-custom > th,
+td.table-primary-custom {
+    background-color: #b8daff;
+}
+
+tr.table-primary-custom > th {
+    border-color: #7abaff;
+    border-bottom: none;
+}
+
+tr.table-primary-custom > th:hover {
+    background-color: #9fcdff;
+}
 /***********************************/

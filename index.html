@@ -117,14 +117,11 @@
             </template>
 	    </div>
 
-        <!-- Search Error message -->
-        <div id="error-msg" role="alert" class="col-4 mt-4 float-container d-flex justify-content-center alert no-display text-center"></div>
-
         <!-- Search result -->
         <div id="search_result" class="no-display my-5">
             <template>
-                <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-                    striped hover bordered responsive show-empty thead-class="user-select-none" thead-tr-class="no-outline">
+                <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" striped hover
+                    bordered responsive show-empty thead-class="user-select-none" thead-tr-class="table-primary-custom no-outline">
 
                     <!-- Table loading spinner-->
                     <template v-slot:table-busy>
@@ -133,7 +130,7 @@
                             <strong>Loading...</strong>
                         </div>
                     </template>
-                    
+
                     <!-- Empty results-->
                     <template v-slot:empty="scope">
                         <h4 class="text-center">No Results Found!</h4>
@@ -141,6 +138,14 @@
 
                     <template v-slot:cell(article.doi)="data">
                         <a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
+                    </template>
+
+                    <template v-if="displayFooter" v-slot:custom-foot="data">
+                        <b-tr>
+                            <b-td colspan="7" class="table-primary-custom text-right">
+                                <b>{{data.items.length}}</b> results found
+                            </b-td>
+                        </b-tr>
                     </template>
                 </b-table>
 			</template>

@@ -8,6 +8,7 @@ const resultsTable = new Vue({
         sortBy: 'article.title',
         sortDesc: false,
         articles: [],
+        displayFooter: false,
         fields: [{
             key: 'article.title',
             label: 'Title',
@@ -60,8 +61,7 @@ const advancedSearch = new Vue({
             { value: 'bdd', text: 'BDD' }
         ],
         show: true,
-        visible: false,
-        collapseIndicator: true ? "+" : "-"
+        visible: false
     },
     methods: {
         onSubmit(evt) {
@@ -99,9 +99,6 @@ function showMessage(message, type) {
         errorMessage.innerHTML = message;
         document.getElementById("searchbar").focus();
         errorMessage.classList.add("alert-danger");
-    } else {
-        errorMessage.innerHTML = message;
-        errorMessage.classList.add("alert-success");
     }
 
 }
@@ -152,10 +149,6 @@ function handleSearch() {
     queryArticles(url);
 }
 
-function generateSearchQuery() {
-    
-}
-
 function queryArticles(url) {
     resultsTable.isBusy = true;
     var client = new HttpClient();
@@ -172,8 +165,8 @@ function queryArticles(url) {
         });
 
         resultsTable.articles = results;
+        resultsTable.displayFooter = results.length > 0;
         resultsTable.isBusy = false;
-        showMessage(articles.length + " article(s) found.");
     });
 }
 
