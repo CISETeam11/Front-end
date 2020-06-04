@@ -273,10 +273,35 @@ function filterResults(article, result, resultFilter) {
     return hasValue;
 }
 
+function removeQuery(btnID){
+    var query = document.getElementById(btnID);
+    query.remove();
+    
+}
+
 function addQuery(){
-    var queryWrapper = document.getElementById('query-wrapper');
-    var query = document.getElementById('query');
-    queryWrapper.innerHTML+=query.innerHTML;
+    var table = document.getElementById("query-table");
+    var lastRowNum;
+    var tr;
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        tr=row.cloneNode(true);
+        lastRowNum=i;
+        console.log(lastRowNum+1);
+        
+    }
+    try{
+        tr.id="query-"+(lastRowNum+1);
+        var btn=tr.children[0];
+        btn=btn.children[0];
+        btn=btn.children[0];
+        btn=btn.children[3];
+        btn.id="query-"+(lastRowNum+1);
+        table.children[0].appendChild(tr);
+    }catch(err){
+        table.children[0].appendChild(queryTemplate);
+    }  
+    
+
 }
 
 function gotoBottom(id) {
@@ -308,6 +333,7 @@ function validateSearchbar(searchbarInput) {
 }
 //document.onload = searchbarOnEnter();
 
+var queryTemplate = document.getElementById("query-1");
 
 //Exporting modules for testing.
 module.exports = {
