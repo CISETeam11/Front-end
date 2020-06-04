@@ -332,7 +332,6 @@ function addQuery(){
         lastRowNum=i;
         console.log(lastRowNum+1);
     }
-
     try{
         tr.id="query-"+(lastRowNum+1);
         var btn=tr.children[0];
@@ -344,6 +343,7 @@ function addQuery(){
     } catch(err) {
         table.children[0].appendChild(queryTemplate);
     }
+    console.log(">>> "+table.children[0]);
 }
 
 function gotoBottom(id) {
@@ -374,7 +374,7 @@ function validateSearchbar(searchbarInput) {
     return true;
 }
 
-var queryTemplate = document.getElementById("query-1");
+var queryTemplate = document.getElementById("query-0");
 
 //Exporting modules for testing.
 module.exports = {
