@@ -113,11 +113,17 @@ const advancedSearchForm = new Vue({
         visible: false,
         startYear: 2000,
         endYear: new Date().getFullYear(),
+        logicalOperator: 'and',
         form: {
             field: null,
             operator: null,
             value: null
         },
+        queryYears: getYearRange(),
+        logicalOperators: [
+            { value: 'and', text: 'AND' },
+            { value: 'or', text: 'OR' }
+        ],
         queryFields: [
             { value: null, text: '- Select Field -', disabled: true },
             { value: 'se-method', text: 'SE Method' },
@@ -143,7 +149,10 @@ const advancedSearchForm = new Vue({
         },
         onReset(evt) {
             evt.preventDefault()
-            // Reset our form values
+            // Reset form values
+            this.startYear = 2000;
+            this.endYear = new Date().getFullYear();
+            this.logicalOperator = 'and';
             this.form.field = null
             this.form.operator = null
             this.form.value = null
