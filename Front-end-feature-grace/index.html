@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap JS, Jquery, moment JS, Vue JS -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <!--  Custom CSS, tempusdominus bootstrap CSS -->
+    <link rel="stylesheet" href="css/search_page.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <!--dateticker -->
+    <!-- https://github.com/uxsolutions/bootstrap-datepicker -->
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <script src="js/moment.js"></script>
+    <script src=" js/moment-with-locales.js"></script>
+    <script src="js/bootstrap-datepicker.min.js"></script> -->
+    <title>Software Engineering Evidence Repository</title>
+</head>
+
+<body>
+    <div class="row mt-1"></div>
+    <ul class="nav justify-content-end">
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="row invisible" style="height: 80px"></div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 justify-content-center">
+                <img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row invisible" style="height: 50px"></div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-12 justify-content-center">
+                <form class="search-form" id="search-form">
+                    <input type="search" value="" class="search-input" id="searchbar">
+                    <button type="submit" class="search-button" onclick="btnSearch()">
+                        <svg class="submit-button">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                        </svg>
+                    </button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+                        <symbol id="search" viewBox="0 0 32 32">
+                            <path
+                                d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+                        </symbol>
+                    </svg>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <div class="row invisible" style="height: 50px"></div>
+        <div class="row">
+            <div class="float-container d-flex justify-content-center">
+                <div class="input-group date" id="startDate">
+                    <input type="text" class="form-control" placeholder="Any" />
+                    <div class="input-group-append">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <p>to</p>
+                <div class="input-group date" id="endDate" >
+                    <input type="text" class="form-control " placeholder="Any" />
+                    <div class="input-group-append" >
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--SE methods-->
+        <div class="row invisible" style="height: 50px"></div>
+        <div class="d-flex justify-content-center" id="se-methods">
+            <div class="dropdown">
+                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Name of Field</button>
+                <div class="dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn"><i class="fa fa-sort-desc fa-fw dropbtn"></i>Operator</button>
+                <div class="dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            </div>
+            <input size="1" type="number" placeholder="value">
+            <button class="btn"><i class="fa fa-plus-circle" onclick="addSE_method()"></i></button>
+            <button class="btn"><i class="fa fa-times-circle" onclick="removeSE_method()"></i></button>
+        </div>
+
+        <div class="row invisable" style="height: 20px"></div>
+        <!--Search Error message-->
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 alert invisible text-center" role="alert" id="error-msg"></div>
+            <div class="col-4"></div>
+        </div>
+        <!--Search button-->
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button class="btn btn-primary btn-lg btn-block" id='search-btn' onclick="btnSearch()">Search</button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <!-- search result -->
+        <div class="row invisible" style="height: 50px"></div>
+
+        <div id="search_result" class="invisible">
+            <template>
+                <div>
+                    <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy"
+                        :sort-desc.sync="sortDesc" striped hover bordered responsive show-empty
+                        thead-class="user-select-none">
+
+                        <!-- Table loading spinner-->
+                        <template v-slot:table-busy>
+                            <div class="text-center text-danger my-2">
+                                <b-spinner class="align-middle"></b-spinner>
+                                <strong>Loading...</strong>
+                            </div>
+                        </template>
+
+                        <!-- Empty results-->
+                        <template v-slot:empty="scope">
+                            <h4 class="text-center">No Results Found!</h4>
+                        </template>
+
+                        <template v-slot:cell(article.doi)="data">
+                            <a :href="'https://doi.org/' + data.item.article.doi"
+                                target="_blank">{{data.item.article.doi}}</a>
+                        </template>
+                    </b-table>
+                </div>
+            </template>
+        </div>
+        <div class="row invisible" style="height: 50px"></div>
+    </div>
+
+    
+<script type="text/javascript">
+    // Start Of Date picker
+    $('#startDate').datepicker({
+            format: 'dd/mm/yyyy',
+            locale: moment.locale('en-nz')
+        });
+
+        $('#endDate').datepicker({
+            format: 'dd/mm/yyyy',
+            endDate: new Date,
+            locale: moment.locale('en-nz')
+
+        });
+        // To get data from form $("#startTime").data("datepicker").getDate()
+        // End Of Date picker
+</script>
+</body>
+
+
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/network.js"></script>
+<script type='text/javascript' src="js/search.js"></script>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+
+    <!--jquery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!--bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!--rating -->
+    <!-- https://github.com/kartik-v/bootstrap-star-rating -->
+    <!-- https://plugins.krajee.com/star-rating#usage -->
+    <link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="js/star-rating.js" type="text/javascript"></script>
+
+    <!--datetimepicker -->
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+        rel="stylesheet">
+    <script src="js/moment"></script>
+    <script src=" js/moment-with-locales.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <h1>Hello, world!</h1>
+    <div class="row">
+        <div id="main" style="width:100%;  ">
+
+            <div id="left" style="width: 25%;">User Article Rating: </div>
+
+            <div id="right" style="width:75%; float:left;"><input id="inputRating" type="number" class="rating" min=0
+                    max=5 step=0.5 value=5 data-size="sm" data-show-clear=false data-show-caption=false></div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class='col-sm-2'>
+            Date From
+        </div>
+
+        <div class='col-sm-3'>
+            <div class='input-group date' id='startDate'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class='col-sm-1'>
+            To
+        </div>
+        <div class='col-sm-3'>
+            <div class='input-group date' id='endDate'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="col-sm-6">
+        <select class="form-control" id='operator'>
+            <option>Or</option>
+            <option>And</option>
+        </select>
+    </div>
+
+
+    <script>
+        $("#inputRating").rating();
+        $('#inputRating').on('rating:change', function (event, value, caption) {
+            console.log(value);
+            console.log(caption);
+        });
+
+
+
+        $('#startDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: moment.locale('en-nz')
+        });
+        $('#endDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: moment.locale('en-nz')
+        });
+
+        // To get data from form $("#startTime").data("datetimepicker").getDate()
+
+
+        $('#operator').change(function(){
+            console.log(this.value);
+        });
+            
+    
+        
+
+    </script>
+
+
+</body>
+
+</html>
