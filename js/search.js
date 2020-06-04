@@ -1,7 +1,7 @@
 //:: Handles searchbar input :://
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
-const vueTable = new Vue({
+const resultsTable = new Vue({
     el: '#search_result',
     data: {
         stitle: true,
@@ -13,6 +13,8 @@ const vueTable = new Vue({
         sortBy: 'article.title',
         sortDesc: false,
         articles: [],
+        isEmpty: true,
+        lastQueryUrl: null,
         fields: [{
             key: "article.title",
             label: "Title",
@@ -104,11 +106,85 @@ const vueTable = new Vue({
     }
 });
 
+const advancedSearchForm = new Vue({
+    el: '#advanced-search',
+    data: {
+        show: true,
+        visible: false,
+        form: {
+            startYear: 2000,
+            endYear: new Date().getFullYear(),
+            logicalOperator: 'and',
+            field: null,
+            operator: null,
+            value: null
+        },
+        queryYears: getYearRange(),
+        logicalOperators: [
+            { value: 'and', text: 'AND' },
+            { value: 'or', text: 'OR' }
+        ],
+        queryFields: [
+            { value: null, text: '- Field -', disabled: true },
+            { value: 'Method', text: 'SE Method' }
+        ],
+        queryOperators: [
+            { value: null, text: '- Operator -', disabled: true },
+            { value: 'eq', text: 'Is Equal To' }
+        ],
+        queryValues: [
+            { value: null, text: '- Value -', disabled: true },
+            'TDD',
+            'BDD',
+            'Pair Programming',
+            'Planning Poker',
+            'Daily Standup Meetings',
+            'Story Boards',
+            'Story Mapping',
+            'Continuous Integration',
+            'Retrosepctives',
+            'Burn Down Charts',
+            'Requirements Prioritisation',
+            'Version Control',
+            'Code Sharing'
+        ]
+    },
+    methods: {
+        onSubmit(evt) {
+            evt.preventDefault()
+            advancedSearch(this.form);
+            this.visible = false;
+        },
+        onReset(evt) {
+            evt.preventDefault()
+            // Reset form values
+            this.form.startYear = 2000;
+            this.form.endYear = new Date().getFullYear();
+            this.form.logicalOperator = 'and';
+            this.form.field = null
+            this.form.operator = null
+            this.form.value = null
+
+            // Trick to reset/clear native browser form validation state
+            this.show = false
+            this.$nextTick(() => {
+                this.show = true
+            })
+        }
+    }
+});
+
+function getYearRange() {
+    const currentYear = new Date().getUTCFullYear();
+    const numberOfYears = 40;
+    return Array(currentYear - (currentYear - numberOfYears)).fill('').map((v, index) => currentYear - index);
+}
+
 //:: A simple function to show user messages ::/
 function showMessage(message, type) {
     var errorMessage = document.getElementById("error-msg");
     errorMessage.classList.remove("error-text");
-    errorMessage.classList.remove("invisible");
+    errorMessage.classList.remove("no-display");
     errorMessage.classList.remove("alert-danger");
     errorMessage.classList.remove("alert-success");
 
@@ -117,78 +193,162 @@ function showMessage(message, type) {
         errorMessage.innerHTML = message;
         document.getElementById("searchbar").focus();
         errorMessage.classList.add("alert-danger");
-    } else {
-        errorMessage.innerHTML = message;
-        errorMessage.classList.add("alert-success");
     }
 
 }
 
-//:: A fuction to handle pressing enter while focues on search bar :://
-function searchbarOnEnter() {
-    document.getElementById('searchbar').onkeypress = function (e) {
-        if (!e) e = window.event;
+//:: Event handler pressing enter while focues on search bar :://
+document.getElementById('searchbar').onkeypress = function (e) {
+    if (!e) e = window.event;
 
-        var keyCode = e.keyCode || e.which;
+    var keyCode = e.keyCode || e.which;
 
-        if (keyCode == '13') {
-            handleSearch();
-            return false;
-        }
+    if (keyCode == '13') {
+        const searchInput = $('#searchbar').val();
+        quickSearch(searchInput);
+        return false;
     }
 }
 
 //:: A function to get input from searchbar to get results from API :://
-function handleSearch() {
-    try {
-        var searchbarInput = document.getElementsByClassName('search-input')[0].value;
-        searchbarInput = searchbarInput.toUpperCase();
-    } catch (err) {
-        searchbarInput = testInput;
-    }
-
-    if (!validateSearchbar(searchbarInput)) {
+function quickSearch(searchInput) {    
+    if (!validateSearchbar(searchInput)) {
         return;
     }
 
-    if ($("#search_result").hasClass("invisible")) {
-        $("#search_result").removeClass("invisible");
+    if ($("#search_result").hasClass("no-display")) {
+        $("#search_result").removeClass("no-display");
     }
 
-    // TODO: Filter for SE Methods, TODO: Filter for date-range
-    var url = `${BASE_URL}?$filter=contains(toupper(title),'${searchbarInput}')
-    or contains(toupper(author),'${searchbarInput}')
-    or contains(toupper(doi),'${searchbarInput}')
-    or Results/any(a: contains(toupper(a/Result),'${searchbarInput}'))
-    or Results/any(a: contains(toupper(a/Method),'${searchbarInput}'))
-    or Results/any(a: contains(toupper(a/Methodology),'${searchbarInput}'))`;
+    let url = BASE_URL;
 
-    vueTable.isBusy = true;
-    var client = new HttpClient(); // Calling api to get atricles.
+    if (searchInput.length > 0) {
+        if (Number.isInteger(Number(searchInput))) {
+            url += `?$filter=year eq ${parseInt(searchInput)}`;
+        } else if (typeof(searchInput) == "string") {
+            searchInput = searchInput.toUpperCase();
+            url += `?$filter=contains(toupper(title),'${searchInput}') ` +
+            `or contains(toupper(author),'${searchInput}') ` +
+            `or contains(toupper(doi),'${searchInput}') ` +
+            `or Results/any(a: contains(toupper(a/Result),'${searchInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Method),'${searchInput}')) ` +
+            `or Results/any(a: contains(toupper(a/Methodology),'${searchInput}'))`;
+        } 
+    }
 
-    client.get(url, function (response) {
+    queryArticles(url, searchInput);
+}
+
+function advancedSearch(form) {
+    let url = BASE_URL;
+
+    if ($("#search_result").hasClass("no-display")) {
+        $("#search_result").removeClass("no-display");
+    }
+
+    // Swap year ranges if start is higher than end
+    if (form.startYear > form.endYear) {
+        const start = form.startYear;
+        form.startYear = form.endYear;
+        form.endYear = start;
+    }
+
+    url += `?$filter=year ge ${form.startYear} and year le ${form.endYear}`;
+
+    if (form.field && form.operator && form.value) {
+        url += ` ${form.logicalOperator} Results/any(a: a/${form.field} ${form.operator} '${form.value}')`;
+    }
+        
+
+    queryArticles(url, form.value);
+}
+
+function queryArticles(url, resultFilter) {
+    if (resultsTable.lastQueryUrl == url)
+        return;
+    
+    resultsTable.isBusy = true;
+    resultsTable.lastQueryUrl = url;
+    var client = new HttpClient();
+
+    // Calling api to get articles.
+    client.get(url, function(response) {
         const articles = JSON.parse(response);
         let results = [];
 
         articles.forEach(article => {
             article.results.forEach(result => {
+                if (resultFilter && !filterResults(article, result, resultFilter))
+                    return;
+                
                 results.push({ results: result, article: article });
             });
         });
 
-        vueTable.articles = results;
-        vueTable.isBusy = false;
-        showMessage(articles.length + " article(s) found.");
+        resultsTable.articles = results;
+        resultsTable.isEmpty = results.length == 0;
+        resultsTable.isBusy = false;
     });
+}
+
+function filterResults(article, result, resultFilter) {
+    let hasValue = false;
+
+    Object.values(article).forEach(value => {
+        if (parseInt(resultFilter) == article.year) {
+            hasValue = true;
+            return;
+        } else if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter.toUpperCase())) {
+            hasValue = true;
+            return;
+        }
+    });
+
+    if (hasValue)
+        return true
+
+    Object.values(result).forEach(value => {
+        if (value && value.toUpperCase().includes(resultFilter.toUpperCase())) {
+            hasValue = true;
+            return;
+        }
+    });
+
+    return hasValue;
+}
+
+function removeQuery(btnID){
+    var query = document.getElementById(btnID);
+    query.remove();
+}
+
+function addQuery(){
+    var table = document.getElementById("query-table");
+    var lastRowNum;
+    var tr;
+
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        tr=row.cloneNode(true);
+        lastRowNum=i;
+        console.log(lastRowNum+1);
+    }
+
+    try{
+        tr.id="query-"+(lastRowNum+1);
+        var btn=tr.children[0];
+        btn=btn.children[0];
+        btn=btn.children[1];
+        btn=btn.children[3];
+        btn.id="query-"+(lastRowNum+1);
+        table.children[0].appendChild(tr);
+    } catch(err) {
+        table.children[0].appendChild(queryTemplate);
+    }
 }
 
 function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
-}
-
-function btnSearch() {
-    handleSearch();
 }
 
 function validateSearchbar(searchbarInput) {
@@ -213,11 +373,11 @@ function validateSearchbar(searchbarInput) {
     }
     return true;
 }
-//document.onload = searchbarOnEnter();
 
+var queryTemplate = document.getElementById("query-1");
 
 //Exporting modules for testing.
 module.exports = {
     validateSearchbar: validateSearchbar,
-    handleSearch: handleSearch
+    quickSearch: quickSearch
 };

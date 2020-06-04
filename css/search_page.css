@@ -20,7 +20,7 @@
 .search-input {
     position: absolute;
     top: 8px;
-    left: 38px;
+    left: 42px;
     font-size: 16px;
     background: none;
     color: #5a6674;
@@ -49,7 +49,6 @@
     border: none;
     background: none;
     outline: none !important;
-    cursor: pointer;
 }
 
 .label {
@@ -81,10 +80,6 @@ input[type=number] {
     display: table;
     margin: 0 auto;
     margin-right: 42%;
-}
-
-.btn {
-    color: #5a6674;
 }
 
 .dropbtn {
@@ -152,17 +147,68 @@ input[type=number] {
 }
 
 .float-container{
-    width: 500px; 
-    margin: 0 auto; 
+    margin: auto; 
 }
+
 .float-container p{
     margin-left: 10px;
     margin-right: 10px;
     line-height: 25px;
 }
+
 .date{
     float: left;
     width: 50%;
-    
+}
+
+.no-display,
+[v-cloak] {
+    display: none !important;
+}
+
+.rounded-1 {
+    border-radius: 1rem;
+}
+
+.w-60 {
+    width: 60%!important;
+}
+
+.w-80 {
+    width: 80%!important;
+}
+
+.mt-100 {
+    margin-top: 100px;
+}
+
+.mt-70 {
+    margin-top: 70px;
+}
+
+.no-outline:focus,
+tr.no-outline > th:focus {
+    box-shadow: none;
+    outline: 0;
+}
+
+.no-underline,
+.no-underline:focus,
+.no-underline:hover {
+    text-decoration: none;
+}
+
+tr.table-primary-custom > th,
+td.table-primary-custom {
+    background-color: #b8daff;
+}
+
+tr.table-primary-custom > th {
+    border-color: #7abaff;
+    border-bottom: none;
+}
+
+tr.table-primary-custom > th:hover {
+    background-color: #9fcdff;
 }
 /***********************************/
