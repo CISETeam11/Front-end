@@ -109,6 +109,10 @@ const resultsTable = new Vue({
 const advancedSearchForm = new Vue({
     el: '#advanced-search',
     data: {
+        show: true,
+        visible: false,
+        startYear: 2000,
+        endYear: new Date().getFullYear(),
         form: {
             field: null,
             operator: null,
@@ -128,9 +132,7 @@ const advancedSearchForm = new Vue({
             { value: null, text: '- Value -', disabled: true },
             { value: 'tdd', text: 'TDD' },
             { value: 'bdd', text: 'BDD' }
-        ],
-        show: true,
-        visible: false
+        ]
     },
     methods: {
         onSubmit(evt) {
@@ -154,6 +156,12 @@ const advancedSearchForm = new Vue({
         }
     }
 });
+
+function getYearRange() {
+    const currentYear = new Date().getUTCFullYear();
+    const numberOfYears = 40;
+    return Array(currentYear - (currentYear - numberOfYears)).fill('').map((v, index) => currentYear - index);
+}
 
 //:: A simple function to show user messages ::/
 function showMessage(message, type) {
