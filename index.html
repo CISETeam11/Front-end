@@ -80,18 +80,20 @@
                                         <p>TO</p>
                                         <b-form-select v-model="endYear" :options="queryYears" class="col-4"></b-form-select>
                                     </b-input-group>
-
-                                    <div id="query-wrapper">
-                                        <div id="query">
-                                            <b-form-select v-model="logicalOperator" :options="logicalOperators" class="col-2 mt-4 float-container d-flex justify-content-center"></b-form-select>
-                                            <b-input-group id="search-query" class="form-group mt-4">
-                                                <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
-                                                <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
-                                                <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
-                                                <button class="btn"><i class="fa fa-times-circle"></i></button>
-                                            </b-input-group>
-                                        </div>
-                                    </div>
+                                    <table class="float-container d-flex justify-content-center" id="query-table">                                         
+                                        <tr id="query-0">
+                                            <td>
+                                                <div class="querys">
+                                                    <b-input-group id="search-query" class="form-group mt-4">
+                                                        <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
+                                                        <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
+                                                        <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
+                                                        <button type="button" class="btn" id="query-0" onClick="removeQuery(this.id)"><i class="fa fa-times-circle"></i></button>
+                                                    </b-input-group>
+                                                </div>  
+                                            </td>
+                                        </tr>
+                                    </table>
                                     
                                     <!-- Add new query button -->
                                     <div class="d-flex justify-content-center mt-5">
