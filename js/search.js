@@ -111,10 +111,10 @@ const advancedSearchForm = new Vue({
     data: {
         show: true,
         visible: false,
-        startYear: 2000,
-        endYear: new Date().getFullYear(),
-        logicalOperator: 'and',
         form: {
+            startYear: 2000,
+            endYear: new Date().getFullYear(),
+            logicalOperator: 'and',
             field: null,
             operator: null,
             value: null
@@ -126,33 +126,31 @@ const advancedSearchForm = new Vue({
         ],
         queryFields: [
             { value: null, text: '- Field -', disabled: true },
-            { value: 'se-method', text: 'SE Method' },
-            { value: 'se-methodology', text: 'SE Methodology' }
+            { value: 'Method', text: 'SE Method' }
         ],
         queryOperators: [
             { value: null, text: '- Operator -', disabled: true },
-            { value: 'eq', text: 'Is Equal To' },
-            { value: 'contains', text: 'Contains' }
+            { value: 'eq', text: 'Is Equal To' }
         ],
         queryValues: [
             { value: null, text: '- Value -', disabled: true },
-            { value: 'tdd', text: 'TDD' },
-            { value: 'bdd', text: 'BDD' }
+            'TDD',
+            'Continuous Integration',
+            'BDD'
         ]
     },
     methods: {
         onSubmit(evt) {
             evt.preventDefault()
-            //alert(JSON.stringify(this.form))
-            advancedSearch();
+            advancedSearch(this.form);
             this.visible = false;
         },
         onReset(evt) {
             evt.preventDefault()
             // Reset form values
-            this.startYear = 2000;
-            this.endYear = new Date().getFullYear();
-            this.logicalOperator = 'and';
+            this.form.startYear = 2000;
+            this.form.endYear = new Date().getFullYear();
+            this.form.logicalOperator = 'and';
             this.form.field = null
             this.form.operator = null
             this.form.value = null
@@ -231,8 +229,28 @@ function quickSearch(searchInput) {
     queryArticles(url, searchInput);
 }
 
-function advancedSearch() {
+function advancedSearch(form) {
+    let url = BASE_URL;
 
+    if ($("#search_result").hasClass("no-display")) {
+        $("#search_result").removeClass("no-display");
+    }
+
+    // Swap year ranges if start is higher than end
+    if (form.startYear > form.endYear) {
+        const start = form.startYear;
+        form.startYear = form.endYear;
+        form.endYear = start;
+    }
+
+    url += `?$filter=year ge ${form.startYear} and year le ${form.endYear}`;
+
+    if (form.field && form.operator && form.value) {
+        url += ` ${form.logicalOperator} Results/any(a: a/${form.field} ${form.operator} '${form.value}')`;
+    }
+        
+
+    queryArticles(url, form.value);
 }
 
 function queryArticles(url, resultFilter) {
@@ -250,7 +268,7 @@ function queryArticles(url, resultFilter) {
 
         articles.forEach(article => {
             article.results.forEach(result => {
-                if (!filterResults(article, result, resultFilter))
+                if (resultFilter && !filterResults(article, result, resultFilter))
                     return;
                 
                 results.push({ results: result, article: article });
@@ -270,7 +288,7 @@ function filterResults(article, result, resultFilter) {
         if (parseInt(resultFilter) == article.year) {
             hasValue = true;
             return;
-        } else if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter)) {
+        } else if (typeof(value) == "string" && value.toUpperCase().includes(resultFilter.toUpperCase())) {
             hasValue = true;
             return;
         }
@@ -280,7 +298,7 @@ function filterResults(article, result, resultFilter) {
         return true
 
     Object.values(result).forEach(value => {
-        if (value && value.toUpperCase().includes(resultFilter)) {
+        if (value && value.toUpperCase().includes(resultFilter.toUpperCase())) {
             hasValue = true;
             return;
         }
@@ -345,7 +363,6 @@ function validateSearchbar(searchbarInput) {
     }
     return true;
 }
-//document.onload = searchbarOnEnter();
 
 var queryTemplate = document.getElementById("query-1");
 
