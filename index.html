@@ -84,7 +84,8 @@
                                         <tr id="query-0">
                                             <td>
                                                 <div class="querys">
-                                                    <b-input-group id="search-query" class="form-group mt-4">
+                                                    <b-form-select v-model="logicalOperator" :options="logicalOperators" class="col-2 mt-4 float-container d-flex justify-content-center"></b-form-select>
+                                                    <b-input-group id="search-query" class="mt-4">
                                                         <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
                                                         <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
                                                         <b-form-select v-model="form.value" :options="queryValues"></b-form-select>

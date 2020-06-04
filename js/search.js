@@ -125,7 +125,7 @@ const advancedSearchForm = new Vue({
             { value: 'or', text: 'OR' }
         ],
         queryFields: [
-            { value: null, text: '- Select Field -', disabled: true },
+            { value: null, text: '- Field -', disabled: true },
             { value: 'se-method', text: 'SE Method' },
             { value: 'se-methodology', text: 'SE Methodology' }
         ],
@@ -201,7 +201,6 @@ document.getElementById('searchbar').onkeypress = function (e) {
         return false;
     }
 }
-
 
 //:: A function to get input from searchbar to get results from API :://
 function quickSearch(searchInput) {    
@@ -310,7 +309,7 @@ function addQuery(){
         tr.id="query-"+(lastRowNum+1);
         var btn=tr.children[0];
         btn=btn.children[0];
-        btn=btn.children[0];
+        btn=btn.children[1];
         btn=btn.children[3];
         btn.id="query-"+(lastRowNum+1);
         table.children[0].appendChild(tr);
