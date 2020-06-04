@@ -135,8 +135,18 @@ const advancedSearchForm = new Vue({
         queryValues: [
             { value: null, text: '- Value -', disabled: true },
             'TDD',
+            'BDD',
+            'Pair Programming',
+            'Planning Poker',
+            'Daily Standup Meetings',
+            'Story Boards',
+            'Story Mapping',
             'Continuous Integration',
-            'BDD'
+            'Retrosepctives',
+            'Burn Down Charts',
+            'Requirements Prioritisation',
+            'Version Control',
+            'Code Sharing'
         ]
     },
     methods: {
