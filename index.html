@@ -123,13 +123,13 @@
                                 <b-container fluid>
                                     <b-row align-v="center">
                                         <b-col class="my-1">
-                                            <span>Showing results <b>{{(currentPage - 1) * perPage + 1}}</b> to <b>{{Math.min(currentPage * perPage, totalRows)}}</b> of <b>{{totalRows}}</b></span>
+                                            <b-form-group label="Results per page" label-cols-lg="4" label-align-sm="right" label-size="sm" label-for="perPageSelect" class="mb-0">
+                                                <b-form-select v-model="perPage" id="perPageSelect" size="sm" :options="pageOptions" class="w-30"></b-form-select>
+                                            </b-form-group>
                                         </b-col>
 
-                                        <b-col class="my-1">
-                                            <b-form-group label="Results per page" label-cols-lg="6" label-align-sm="right" label-size="sm" label-for="perPageSelect" class="mb-0">
-                                                <b-form-select v-model="perPage" id="perPageSelect" size="sm" :options="pageOptions" class="w-50"></b-form-select>
-                                            </b-form-group>
+                                        <b-col class="my-1 text-center">
+                                            <span>Showing {{(currentPage - 1) * perPage + 1}} to {{Math.min(currentPage * perPage, totalRows)}} of {{totalRows}} results</span>
                                         </b-col>
                                     
                                         <b-col class="my-1">
