@@ -94,8 +94,9 @@
             
             <!-- Results table -->
             <template>
-                <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" striped hover
-                    bordered responsive show-empty thead-class="user-select-none" thead-tr-class="table-primary-custom no-outline">
+                <b-table :items="articles" :fields="fields" :busy="isBusy" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :per-page="perPage"
+                    :current-page="currentPage" striped hover bordered responsive show-empty
+                    thead-class="user-select-none" thead-tr-class="table-primary-custom no-outline">
 
                     <!-- Table loading spinner-->
                     <template v-slot:table-busy>
@@ -118,8 +119,9 @@
                     <!-- Table footer -->
                     <template v-if="isEmpty === false" v-slot:custom-foot="data">
                         <b-tr>
-                            <b-td colspan="7" class="table-primary-custom text-right">
+                            <b-td colspan="7" class="table-primary-custom">
                                 <b>{{data.items.length}}</b> {{data.items.length > 1 ? 'Results' : 'Result'}} Found
+                                <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" size="sm" class="my-0 float-right"></b-pagination>
                             </b-td>
                         </b-tr>
                     </template>

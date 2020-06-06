@@ -8,6 +8,9 @@ const resultsTable = new Vue({
         syear: true,
         sdoi: true,
         smethod: false,
+        totalRows: 1,
+        currentPage: 1,
+        perPage: 10,
         isBusy: false,
         sortBy: 'article.title',
         sortDesc: false,
@@ -225,6 +228,8 @@ function queryArticles(url, resultFilter) {
         });
 
         resultsTable.articles = results;
+        resultsTable.totalRows = results.length;
+        resultsTable.currentPage = 1;
         resultsTable.isEmpty = results.length == 0;
         resultsTable.isBusy = false;
     });
