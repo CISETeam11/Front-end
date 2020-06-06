@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Bootstrap JS, Jquery, moment JS, Vue JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
@@ -23,94 +22,58 @@
 </head>
 
 <body>
-    <div class="row mt-1"></div>
-    <ul class="nav justify-content-end">
-        <li class="nav-item mx-2">
-            <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href="#">Log in</a></p>
-        </li>
-        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
-        <li class="nav-item mx-2">
-            <p class="text-muted"><a class="nav-link text-reset user-select-none" style="padding-right: 0px; padding-left: 0px;" href=" #">Sign up</a></p>
-        </li>
-    </ul>
-
 	<div class="container">
 		<div class="row mt-100">
 			<div class="col-6 float-container d-flex justify-content-center">
 				<img src="img/SEERLOGO.png" class="img-fluid" alt="Logo">
 			</div>
         </div>
-        
-        <!-- Quick search -->
-		<div class="row mt-70">
-			<div class="col-12 justify-content-center">
-				<form class="search-form" id="search-form">
-					<input type="search" placeholder="Search by title, author, year, doi or results" class="search-input" id="searchbar">
-					<div class="search-button">
-                        <svg class="submit-button">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                        </svg>
-					</div>
-					<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
-                        <symbol id="search" viewBox="0 0 32 32">
-                            <path
-                            d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
-                        </symbol>
-					</svg>
-				</form>
-			</div>
-		</div>
 
         <!-- Advanced search -->
-        <div id="advanced-search" class="mt-5 mb-4">
-            <div class="float-container d-flex justify-content-center">
-                <b-button v-b-toggle.advanced-search-card variant="link" v-cloak class="no-outline">{{visible ? '-' : '+'}} Advanced Search</b-button>
-            </div>
+        <div id="search" class="mt-70 mb-4">
             <template>
-                <b-collapse id="advanced-search-card" v-model="visible" class="mt-2 w-80 float-container justify-content-center">
-                    <b-card class="rounded-1" style="background-color: #f5f5f5;">
-                        
-                        <!-- Query builder -->
-                        <div class="mt-2 d-flex justify-content-center" id="query-builder">
-                            <template>
-                                <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="w-80">
-                                    <!-- Search query group-->
-                                    <b-input-group class="mt-2 mb-0 d-flex justify-content-center">
-                                        <b-form-select v-model="form.startYear" :options="queryYears" class="col-4"></b-form-select>
-                                        <p>TO</p>
-                                        <b-form-select v-model="form.endYear" :options="queryYears" class="col-4"></b-form-select>
-                                    </b-input-group>
-                                    <table class="float-container d-flex justify-content-center" id="query-table">                                         
-                                        <tr id="query-0">
-                                            <td>
-                                                <div class="querys">
-                                                    <b-form-select v-model="form.logicalOperator" :options="logicalOperators" class="col-2 px-2 mt-4 float-container d-flex justify-content-center"></b-form-select>
-                                                    <b-input-group id="search-query" class="mt-4">
-                                                        <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
-                                                        <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
-                                                        <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
-                                                        <button type="button" class="btn" id="query-0" onClick="removeQuery(this.id)"><i class="fa fa-times-circle"></i></button>
-                                                    </b-input-group>
-                                                </div>  
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
-                                    <!-- Add new query button -->
-                                    <div class="d-flex justify-content-center mt-5">
-                                        <b-button class="btn-sm no-outline" variant="outline-success" onclick="addQuery()">Add new query</b-button>
-                                    </div>
+                <b-card class="w-80 float-container justify-content-center rounded-1" style="background-color: #f5f5f5;">
+                    
+                    <!-- Query builder -->
+                    <div class="mt-2 d-flex justify-content-center" id="query-builder">
+                        <template>
+                            <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="w-80">
+                                <!-- Search query group-->
+                                <b-input-group class="mt-2 mb-0 d-flex justify-content-center">
+                                    <b-form-select v-model="form.startYear" :options="queryYears" class="col-4"></b-form-select>
+                                    <p>TO</p>
+                                    <b-form-select v-model="form.endYear" :options="queryYears" class="col-4"></b-form-select>
+                                </b-input-group>
+                                <table class="float-container d-flex justify-content-center" id="query-table">                                         
+                                    <tr id="query-0">
+                                        <td>
+                                            <div class="querys">
+                                                <b-form-select v-model="form.logicalOperator" :options="logicalOperators" class="col-2 px-2 mt-4 float-container d-flex justify-content-center"></b-form-select>
+                                                <b-input-group id="search-query" class="mt-4">
+                                                    <b-form-select v-model="form.field" :options="queryFields" class="mr-4"></b-form-select>
+                                                    <b-form-select v-model="form.operator" :options="queryOperators" class="mr-4"></b-form-select>
+                                                    <b-form-select v-model="form.value" :options="queryValues"></b-form-select>
+                                                    <button type="button" class="btn" id="query-0" onClick="removeQuery(this.id)"><i class="fa fa-times-circle"></i></button>
+                                                </b-input-group>
+                                            </div>  
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Add new query button -->
+                                <div class="d-flex justify-content-center mt-5">
+                                    <b-button class="btn-sm no-outline" variant="outline-success" onclick="addQuery()">Add new query</b-button>
+                                </div>
 
-                                    <!-- Form submission/reset buttons -->
-                                    <div class="d-flex justify-content-center mt-5">
-                                        <b-button class="col-5 btn-lg mr-4 no-outline" type="submit" variant="primary">Search</b-button>
-                                        <b-button class="btn-lg" type="reset" variant="outline-danger">Reset</b-button>
-                                    </div>
-                                </b-form>
-                            </template>
-                        </div>
-                    </b-card>
-                </b-collapse>
+                                <!-- Form submission/reset buttons -->
+                                <div class="d-flex justify-content-center mt-5">
+                                    <b-button class="col-5 btn-lg mr-4 no-outline" type="submit" variant="primary">Search</b-button>
+                                    <b-button class="btn-lg" type="reset" variant="outline-danger">Reset</b-button>
+                                </div>
+                            </b-form>
+                        </template>
+                    </div>
+                </b-card>
             </template>
 	    </div>
 
@@ -147,6 +110,7 @@
                         <h4 class="text-center">No Results Found!</h4>
                     </template>
 
+                    <!-- DOI URL format-->
                     <template v-slot:cell(article.doi)="data">
                         <a :href="'https://doi.org/' + data.item.article.doi" target="_blank">{{data.item.article.doi}}</a>
                     </template>
@@ -155,7 +119,7 @@
                     <template v-if="isEmpty === false" v-slot:custom-foot="data">
                         <b-tr>
                             <b-td colspan="7" class="table-primary-custom text-right">
-                                <b>{{data.items.length}}</b> results found
+                                <b>{{data.items.length}}</b> {{data.items.length > 1 ? 'Results' : 'Result'}} Found
                             </b-td>
                         </b-tr>
                     </template>
