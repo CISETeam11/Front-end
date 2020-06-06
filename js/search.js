@@ -10,6 +10,7 @@ const resultsTable = new Vue({
         smethod: false,
         totalRows: 1,
         currentPage: 1,
+        pageOptions: [5, 10, 15],
         perPage: 10,
         isBusy: false,
         sortBy: 'article.title',
