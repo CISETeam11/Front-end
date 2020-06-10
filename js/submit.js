@@ -1,4 +1,5 @@
-console.log(JSON.stringify(toJSON('@article{sample1,title={sample title}}')));
+const SUBMISSIONS_URL = 'https://app-submissions-ae-aut.azurewebsites.net/api/moderation';
+
 bibFile();
 
 function bibFile(){
@@ -25,31 +26,40 @@ function bibFile(){
     }) 
   }
 
+function serializeFormToJson(formData){
+    var unindexed_array = formData.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+		if (n.value != '') {
+			if (n.name == 'year' || n.name == 'volume' || n.name == 'journalIssue') {
+				indexed_array[n.name] = parseInt(n.value);
+			} else {
+				indexed_array[n.name] = n.value;
+			}
+		}		
+    });
+
+    return JSON.stringify(indexed_array);
+}
+
 function submitArticle(){
-    
     document.getElementById("doi").classList.remove("is-invalid");
-    if(document.getElementById("doi").value==""){
+
+    if(document.getElementById("doi").value == ""){
         document.getElementById("doi").classList.add("is-invalid");
         return;
-    }
-    console.log(new FormData(form));
-    
-    var data='{"author": "'+document.getElementById("author").value+'","title": "'+
-    document.getElementById("title").value+'","journal": "'+document.getElementById("journal").value+'","year": '+
-    document.getElementById("year").value+',"journalIssue": '+document.getElementById("journalIssue").value+',"volume": '+
-    document.getElementById("volume").value+',"pages": "'+document.getElementById("pages").value+'","doi": "'+document.getElementById("doi").value+'"}';
+	}
 
-    (async () => {
-        const rawResponse = await fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: data
-        });
-        const content = await rawResponse.json();
-      
-        console.log(content);
-    })();
+	fetch(SUBMISSIONS_URL, {
+      	method: 'POST',
+      	headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+        body: serializeFormToJson($("#form"))
+	})
+	.catch(err => {
+		console.log(err);
+	});
 }
