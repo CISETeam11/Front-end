@@ -11,14 +11,16 @@ function bibFile(){
            console.log(JSON.stringify(toJSON(fr.result)[0]));
            var JsonBib = toJSON(fr.result)[0];
 
-           document.getElementById("title").value=JsonBib.entryTags.TITLE;
-           document.getElementById("author").value=JsonBib.entryTags.AUTHOR;
-           document.getElementById("journal").value=JsonBib.entryTags.JOURNAL;
-           document.getElementById("year").value=JsonBib.entryTags.YEAR;
-           document.getElementById("doi").value=JsonBib.entryTags.DOI;
-           document.getElementById("volume").value=JsonBib.entryTags.VOLUME;
-           document.getElementById("pages").value=JsonBib.entryTags.PAGES;
-           document.getElementById("journalIssue").value=JsonBib.entryTags.JOURNALISSUE;
+           document.getElementById("title").value=JsonBib.entryTags.title;
+           var title=JsonBib.entryTags.author.split('{').join('');
+           title=title.split('}').join('');
+           document.getElementById("author").value=title;
+           document.getElementById("journal").value=JsonBib.entryTags.journal;
+           document.getElementById("year").value=JsonBib.entryTags.year;
+           document.getElementById("doi").value=JsonBib.entryTags.doi;
+           document.getElementById("volume").value=JsonBib.entryTags.volume;
+           document.getElementById("pages").value=JsonBib.entryTags.pages;
+           document.getElementById("journalIssue").value=JsonBib.entryTags.number;
            
         } 
           
