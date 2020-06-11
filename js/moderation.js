@@ -1,18 +1,15 @@
-// get an article in queue
-(async () => {
-  fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation', { method: 'get' }).then(function (data) {
-    return data.json();
-  }).then(function (data) {
-    var queueArticles = [];
-    queueArticles.push(data);
-    queueForm.articles = queueArticles;
-  })
-})();
 
 const queueForm = new Vue({
   el: '#queue',
   data: {
-    articles: []
+    articles: [],
+    titleError: '',
+    authorError: '',
+    yearError: '',
+    doiError: ''
+  },
+  mounted: function () {
+    this.getQueue();
   },
   methods: {
     acceptArticle: function () {
@@ -26,24 +23,35 @@ const queueForm = new Vue({
       var journalIssue = this.articles[0].article.journalIssue;
       var id = this.articles[0].id;
       var popReceipt = this.articles[0].popReceipt;
-
-      //console.log('{"article":{ "author": "' + author + '", "title": "' + title + '", "journal": "' + journal + '", "year": ' + year + ', "journalIssue": ' + journalIssue + ', "volume": ' + volume + ', "pages": "' + pages + '", "doi": "' + doi + '"}, "id": "' + id + '","popReceipt":"' + popReceipt + '"} ')
       var data = '{"article":{ "author": "' + author + '", "title": "' + title + '", "journal": "' + journal + '", "year": ' + year + ', "journalIssue": ' + journalIssue + ', "volume": ' + volume + ', "pages": "' + pages + '", "doi": "' + doi + '"}, "id": "' + id + '","popReceipt":"' + popReceipt + '"} ';
-   
-      fetch('https://app-submissions-ae-aut.azurewebsites.net/api/analysis', {
-        method: 'POST', 
-        body: data, 
-        headers: new Headers({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        })
-      }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(function () {
-        // pop up alert, then reload page
-        alert('Accept Successfully!');window.location.href=document.referrer;
-      })
 
+      // validate title, author, year, and doi
+      if (title == '' || title == null || author == '' || author == null || year == '' || year == null || doi == '' || doi == null) {
+        if (title == '' || title == null) {
+          this.titleError = '1px solid #dc3545';
+        }
+        if (author == '' || author == null) {
+          this.authorError = '1px solid #dc3545';
+        }
+        if (year == null || year == '') {
+          this.yearError = '1px solid #dc3545';
+        }
+        if (doi == '' || doi == null) {
+          this.doiError = '1px solid #dc3545';
+        }
+      } else {
+        fetch('https://app-submissions-ae-aut.azurewebsites.net/api/analysis', {
+          method: 'POST',
+          body: data,
+          headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          })
+        }).then(function () {
+          // pop up alert, then reload page
+          alert('Accept Successfully!'); window.location.href = document.referrer;
+        });
+      }
     },
     deleteArticle: function (id, popReceipt) {
       console.log('{"id": "' + id + '","popReceipt":"' + popReceipt + '"}');
@@ -57,25 +65,24 @@ const queueForm = new Vue({
       }
       ).then(function () {
         // pop up alert, then reload page
-        alert('Delete Successfully!');window.location.href=document.referrer;
+        alert('Delete Successfully!'); window.location.href = document.referrer;
       });
+    },
+    getQueue: function () {
+      // get an article in queue
+      (async () => {
+        fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation', { method: 'get' }).then(function (data) {
+          return data.json();
+        }).then(function (data) {
+          var queueArticles = [];
+          queueArticles.push(data);
+          queueForm.articles = queueArticles;
+
+        })
+      })();
     }
   }
 });
-
-// list all articles that need moderation
-(async () => {
-  await fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation/submissions', { method: 'get' }).then(function (data) {
-    return data.json();
-  }).then(function (data) {
-    var articles = [];
-    data.forEach(data => {
-      articles.push(JSON.parse(data.asString));
-    });
-    moderationTable.articles = articles;
-    moderationTable.isBusy = false;
-  })
-})();
 
 
 const moderationTable = new Vue({
@@ -115,5 +122,25 @@ const moderationTable = new Vue({
         key: "Doi",
         label: "Doi",
       }]
+  },
+  mounted: function () {
+    this.getSubActciel();
+  },
+  methods: {
+    getSubActciel: function () {
+      // list all articles that need moderation
+      (async () => {
+        await fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation/submissions', { method: 'get' }).then(function (data) {
+          return data.json();
+        }).then(function (data) {
+          var articles = [];
+          data.forEach(data => {
+            articles.push(JSON.parse(data.asString));
+          });
+          moderationTable.articles = articles;
+          moderationTable.isBusy = false;
+        })
+      })();
+    }
   }
 });

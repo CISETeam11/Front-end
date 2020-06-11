@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
     <!--  Custom CSS, tempusdominus bootstrap CSS -->
-    <link rel="stylesheet" href="css/search_page.css">
+    <link rel="stylesheet" href="css/moderator.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
@@ -29,30 +29,26 @@
 
     <div class="container">
         <div class="row">
-            
+
             <div class="col"></div>
             <div class="col-12" id="queue">
                 <div class="justify-content-center mt-5">
                     <h1 class="text-center">Queue</h1>
-                    <form id="form">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                     <label for="title">Title</label>
                                     <div v-for="item in articles">
-                                        <input type="text" id="title" v-model="item.article.title" name="title"
-                                            class="form-control" required>
+                                        <input type="text" id="title" v-model.lazy="item.article.title" name="title"
+                                        class="form-control" v-bind:style="{border: titleError}" required>
                                     </div>
-                                </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
+                            <div class="form-group col-md-6">
                                     <label for="author">Author(s)</label>
                                     <div v-for="item in articles">
-                                        <input type="text" id="author" v-model="item.article.author" name="author"
-                                            class="form-control" required>
+                                        <input type="text" id="author" v-model.lazy="item.article.author" name="author"
+                                            class="form-control" v-bind:style="{border: authorError}" required>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,49 +56,43 @@
                             <div v-for="item in articles">
                                 <input type="text" id="journal" v-model="item.article.journal" name="journal"
                                     class="form-control">
-                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="year">Year</label>
                             <div v-for="item in articles">
-                                <input type="text" id="year" v-model="item.article.year" name="year"
-                                    class="form-control" required>
-                                </div>
+                                <input type="text" id="year" v-model.lazy="item.article.year" name="year"
+                                    class="form-control" v-bind:style="{border: yearError}" required>
+                            </div>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="doi">DOI</label>
                             <div v-for="item in articles">
-                                <input type="text" id="doi" v-model="item.article.doi" name="doi" class="form-control"
-                                    required>
-                                </div>
+                                <input type="text" id="doi" v-model.lazy="item.article.doi" name="doi" class="form-control"
+                                v-bind:style="{border: doiError}" required>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="title">Volume</label>
-                                    <div v-for="item in articles">
-                                        <input type="number" v-model="item.article.volume" id="volume" name="volume"
-                                            class="form-control">
-                                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="title">Volume</label>
+                                <div v-for="item in articles">
+                                    <input type="number" v-model="item.article.volume" id="volume" name="volume"
+                                        class="form-control">
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="author">Pages</label>
-                                    <div v-for="item in articles">
-                                        <input type="text" v-model="item.article.pages" id="pages" name="pages"
-                                            class="form-control">
-                                        </div>
+                            <div class="form-group col-4">
+                                <label for="author">Pages</label>
+                                <div v-for="item in articles">
+                                    <input type="text" v-model="item.article.pages" id="pages" name="pages"
+                                        class="form-control">
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="journalIssue">Journal Issue</label>
-                                    <div v-for="item in articles">
-                                        <input type="number" id="journalIssue" v-model="item.article.journalIssue"
-                                            name="journalIssue" class="form-control" placeholder="2">
-                                        </div>
+                            <div class="form-group col-4">
+                                <label for="journalIssue">Journal Issue</label>
+                                <div v-for="item in articles">
+                                    <input type="number" id="journalIssue" v-model="item.article.journalIssue"
+                                        name="journalIssue" class="form-control" placeholder="2">
                                 </div>
                             </div>
                         </div>
