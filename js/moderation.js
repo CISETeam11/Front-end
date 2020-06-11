@@ -39,7 +39,10 @@ const queueForm = new Vue({
         })
       }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then(function () {
+        // pop up alert, then reload page
+        alert('Accept Successfully!');window.location.href=document.referrer;
+      })
 
     },
     deleteArticle: function (id, popReceipt) {
@@ -52,8 +55,9 @@ const queueForm = new Vue({
           'Content-Type': 'application/json'
         })
       }
-      ).then(function (data) {
-        alert("success");
+      ).then(function () {
+        // pop up alert, then reload page
+        alert('Delete Successfully!');window.location.href=document.referrer;
       });
     }
   }
