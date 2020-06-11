@@ -57,17 +57,17 @@
 
                             <!-- Empty Queue-->
                             <template v-slot:empty="scope">
-                                <h4 class="text-center">No Articles are waiting!</h4>
+                                <h4 class="text-center">No Articles in Queue!</h4>
                             </template>
 
                             <template v-slot:cell(Doi)="data">
-                                <a :href="'https://doi.org/' + data.item.Doi" target="_blank">{{data.item.Doi}}</a>
+                                <a :href="'https://doi.org/' + data.item.doi" target="_blank">{{data.item.doi}}</a>
                             </template>
                             
                             
                             <template v-slot:cell(moderation)="data">
-                                <button>Accept</button>
-                                <button>Reject</button>
+                                <button @click="acceptArticle">Accept</button>
+                                <button @click="deleteArticle">Reject</button>
                             </template>
 
                         </b-table>

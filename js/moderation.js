@@ -1,13 +1,13 @@
 // get an article in queue
-  //  fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation', { method: 'get' }).then(function (data) {
-  // }).then(function (data) {
-  //   var articles = JSON.parse(data);
-  //   data.forEach(data => {
-  //     articles.push({id: id, popReceipt: popReceipt});
-  //   });
-  //   queueTable.articles = articles;
-  //   queueTable.isBusy = false;
-  // });
+
+fetch('https://app-submissions-ae-aut.azurewebsites.net/api/moderation', { method: 'get' }).then(function (data) {
+  return data.json();
+}).then(function (data) {
+  var articles = [data];
+  queueTable.articles = articles;
+  queueTable.isBusy = false;
+
+});
 
 const queueTable = new Vue({
   el: '#queue',
@@ -16,43 +16,59 @@ const queueTable = new Vue({
     articles: [],
     fields:
       [{
-        key: "Title",
+        key: "article.title",
         label: "Title",
       }, {
-        key: "Author",
+        key: "article.author",
         label: "Author",
       },
       {
-        key: "Journal",
+        key: "article.journal",
         label: "Journal",
       },
       {
-        key: "Year",
+        key: "article.year",
         label: "Title",
       },
       {
-        key: "JournalIssue",
+        key: "article.journalIssue",
         label: "JournalIssue",
       },
       {
-        key: "Volume",
+        key: "article.volume",
         label: "Volume",
       },
       {
-        key: "Pages",
+        key: "article.pages",
         label: "Pages",
       },
       {
-        key: "Doi",
+        key: "article.doi",
         label: "Doi",
       },
       {
         key: "moderation",
-        label:"Moderation"
-      
+        label: "Moderation"
+
       }]
+  },
+  methods:{
+    acceptArticle: function () {
+      console.log("yes")  
+    },
+    deleteArticle: function() {
+      console.log("no")
+    }
+      
+    
   }
 });
+
+
+
+
+
+
 
 
 
