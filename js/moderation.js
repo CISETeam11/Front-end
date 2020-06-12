@@ -28,16 +28,27 @@ const queueForm = new Vue({
       // validate title, author, year, and doi
       if (title == '' || title == null || author == '' || author == null || year == '' || year == null || doi == '' || doi == null) {
         if (title == '' || title == null) {
-          this.titleError = '1px solid #dc3545';
+          this.titleError = '2px solid #dc3545';
+        }else{
+          this.titleError = '';
         }
+
         if (author == '' || author == null) {
-          this.authorError = '1px solid #dc3545';
+          this.authorError = '2px solid #dc3545';
+        }
+        else{
+           this.authorError = '';
         }
         if (year == null || year == '') {
-          this.yearError = '1px solid #dc3545';
+          this.yearError = '2px solid #dc3545';
+        }else{
+          this.yearError = '';
         }
+
         if (doi == '' || doi == null) {
-          this.doiError = '1px solid #dc3545';
+          this.doiError = '2px solid #dc3545';
+        }else{
+          this.doiError = '';
         }
       } else {
         fetch('https://app-submissions-ae-aut.azurewebsites.net/api/analysis', {
@@ -49,7 +60,7 @@ const queueForm = new Vue({
           })
         }).then(function () {
           // pop up alert, then reload page
-          alert('Accept Successfully!'); window.location.href = document.referrer;
+          alert('Accept Successful!'); window.location.href = document.referrer;
         });
       }
     },
@@ -65,7 +76,7 @@ const queueForm = new Vue({
       }
       ).then(function () {
         // pop up alert, then reload page
-        alert('Delete Successfully!'); window.location.href = document.referrer;
+        alert('Reject Successful!'); window.location.href = document.referrer;
       });
     },
     getQueue: function () {
