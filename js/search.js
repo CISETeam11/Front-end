@@ -1,4 +1,3 @@
-//:: Handles searchbar input :://
 const BASE_URL = "https://app-articles-ae-aut.azurewebsites.net/api/articles";
 
 const resultsTable = new Vue({
@@ -106,8 +105,8 @@ const resultsTable = new Vue({
     }
 });
 
-const advancedSearchForm = new Vue({
-    el: '#advanced-search',
+const SearchForm = new Vue({
+    el: '#search',
     data: {
         show: true,
         visible: false,
@@ -152,7 +151,7 @@ const advancedSearchForm = new Vue({
     methods: {
         onSubmit(evt) {
             evt.preventDefault()
-            advancedSearch(this.form);
+            search(this.form);
             this.visible = false;
         },
         onReset(evt) {
@@ -176,70 +175,11 @@ const advancedSearchForm = new Vue({
 
 function getYearRange() {
     const currentYear = new Date().getUTCFullYear();
-    const numberOfYears = 40;
+    const numberOfYears = 60;
     return Array(currentYear - (currentYear - numberOfYears)).fill('').map((v, index) => currentYear - index);
 }
 
-//:: A simple function to show user messages ::/
-function showMessage(message, type) {
-    var errorMessage = document.getElementById("error-msg");
-    errorMessage.classList.remove("error-text");
-    errorMessage.classList.remove("no-display");
-    errorMessage.classList.remove("alert-danger");
-    errorMessage.classList.remove("alert-success");
-
-    if (type == "Error") {
-        errorMessage.classList.add("error-text");
-        errorMessage.innerHTML = message;
-        document.getElementById("searchbar").focus();
-        errorMessage.classList.add("alert-danger");
-    }
-
-}
-
-//:: Event handler pressing enter while focues on search bar :://
-document.getElementById('searchbar').onkeypress = function (e) {
-    if (!e) e = window.event;
-
-    var keyCode = e.keyCode || e.which;
-
-    if (keyCode == '13') {
-        const searchInput = $('#searchbar').val();
-        quickSearch(searchInput);
-        return false;
-    }
-}
-
-//:: A function to get input from searchbar to get results from API :://
-function quickSearch(searchInput) {    
-    if (!validateSearchbar(searchInput)) {
-        return;
-    }
-
-    if ($("#search_result").hasClass("no-display")) {
-        $("#search_result").removeClass("no-display");
-    }
-
-    let url = BASE_URL;
-
-    if (searchInput.length > 0) {
-        if (Number.isInteger(Number(searchInput))) {
-            url += `?$filter=year eq ${parseInt(searchInput)}`;
-        } else if (typeof(searchInput) == "string") {
-            searchInput = searchInput.toUpperCase();
-            url += `?$filter=contains(toupper(title),'${searchInput}') ` +
-            `or contains(toupper(author),'${searchInput}') ` +
-            `or contains(toupper(doi),'${searchInput}') ` +
-            `or Results/any(a: contains(toupper(a/Result),'${searchInput}')) ` +
-            `or Results/any(a: contains(toupper(a/Method),'${searchInput}')) ` +
-            `or Results/any(a: contains(toupper(a/Methodology),'${searchInput}'))`;
-        } 
-    }
-
-    queryArticles(url, searchInput);
-}
-
-function advancedSearch(form) {
+function search(form) {
     let url = BASE_URL;
 
     if ($("#search_result").hasClass("no-display")) {
@@ -259,7 +199,6 @@ function advancedSearch(form) {
         url += ` ${form.logicalOperator} Results/any(a: a/${form.field} ${form.operator} '${form.value}')`;
     }
         
-
     queryArticles(url, form.value);
 }
 
@@ -351,33 +290,11 @@ function gotoBottom(id) {
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
 
-function validateSearchbar(searchbarInput) {
-    var searchbar = document.getElementById("search-form");
-    try {
-        searchbar.classList.remove("search-error");
-    } catch (err) { }
-    if (searchbarInput != "") {
-        if (searchbarInput.length < 2) {
-            try {
-                searchbar.classList.add("search-error");
-                showMessage("Must be more than 2 or more characters.", "Error");
-            } catch (err) { }
-            return false;
-        } else if (searchbarInput.length > 120) {
-            try {
-                searchbar.classList.add("search-error");
-                showMessage("Must not be more than 120 characters.", "Error");
-            } catch (err) { }
-            return false;
-        }
-    }
-    return true;
-}
-
 var queryTemplate = document.getElementById("query-0");
 
 //Exporting modules for testing.
-module.exports = {
-    validateSearchbar: validateSearchbar,
-    quickSearch: quickSearch
-};
+try{
+    module.exports = {
+        
+    };
+}catch(err){}
