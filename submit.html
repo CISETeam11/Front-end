@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap JS, Jquery, moment JS, Vue JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <!--  Custom CSS, tempusdominus bootstrap CSS -->
+    <link rel="stylesheet" href="css/search_page.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <title>Software Engineering Evidence Repository</title>
+</head>
+
+<body>
+    <!--Navigation links-->
+    <ul class="nav justify-content-end">
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href="./index.html">Search</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href=" #">Moderate</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href=" #">Analyse</a></p>
+        </li>
+    </ul>
+    <!--Title-->
+    <h2 class="text-center text-muted">Submit Article</h2>
+    <!--Form container-->
+    <div class="container">
+        <div class=" justify-content-center mt-5"
+            style="width: 65%; margin: auto; background-color: #f5f5f5; padding: 20px; border: solid 1px #cacaca; border-radius: 16px; padding-top: 50px; padding-bottom: 20px;">
+            <form id="form" action="">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" class="form-control"
+                                placeholder="Most Common Mistakes in Test-Driven Development Practice: Results from an Online Survey with Developers">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="author">Author(s)</label>
+                            <input type="text" id="author" placeholder="Mauricio Aniche, Marco Gerosa" name="author"
+                                class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author">Journal</label>
+                    <input type="text" id="journal" placeholder="IEEE Software" name="journal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="doi">DOI</label>
+                    <input type="text" id="doi" name="doi" placeholder="10.1109/ICSTW.2010.16" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <select name="year" id="year" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="title">Volume</label>
+                            <input type="number" id="volume" name="volume" class="form-control" placeholder="2">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="author">Pages</label>
+                            <input type="text" id="pages" placeholder="20-24" name="pages" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="journalIssue">Journal Issue</label>
+                            <input type="number" id="journalIssue" name="journalIssue" class="form-control"
+                                placeholder="2">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bibtex">Bibtex</label>
+                    <input type="file" id="bibtex" multiple size="50" class="form-control">
+                </div>
+                <!--UI messages-->
+                <div id="message" style="display: none;" class="alert">message</div><br>
+                <!--Submit & reset form buttons-->
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control btn-lg mr-4 no-outline"
+                        style="line-height: 22px;" onclick="submitArticle()">Submit</button>
+                </div>
+                <div class="form-group">
+                    <button type="reset" class="btn btn-outline-danger form-control btn-lg mr-4 no-outline"
+                        variant="outline-danger" style="line-height: 22px;" onclick="resetSubmitForm()">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+<script>
+    //Handles popluating years into year input field. 
+    var select = document.getElementById("year");
+    var d = new Date();
+    var currentYear = parseInt(d.getFullYear());
+    var startYear = currentYear - 60;
+
+    for (var i = currentYear; i > startYear; i--) {
+        var el = document.createElement("option");
+        el.textContent = i;
+        el.value = i;
+        select.appendChild(el);
+    }
+</script>
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/network.js"></script>
+<script type='text/javascript' src="js/bibtexParse.js"></script>
+<script type='text/javascript' src="js/submit.js"></script>
+
+</html>

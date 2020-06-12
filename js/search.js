@@ -293,6 +293,8 @@ function gotoBottom(id) {
 var queryTemplate = document.getElementById("query-0");
 
 //Exporting modules for testing.
-module.exports = {
-   
-};
+try{
+    module.exports = {
+        
+    };
+}catch(err){}
