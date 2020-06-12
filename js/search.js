@@ -294,7 +294,7 @@ var queryTemplate = document.getElementById("query-0");
 
 //Exporting modules for testing.
 try{
-module.exports = {
-   
-};
+    module.exports = {
+        
+    };
 }catch(err){}

@@ -72,23 +72,33 @@ function submitArticle() {
     return;
   }
 
-  (async () => {
-    const rawResponse = await fetch(SUBMISSIONS_URL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: serializeFormToJson($("#form"))
-    }).catch(err => {
-      message.classList.add("alert alert-danger");
-      message.innerHTML = "Article submission was unsuccessful. (" + err + ")";
-    });
-    const content = await rawResponse.json();
-    if (content != null) {
+  fetch(SUBMISSIONS_URL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: serializeFormToJson($("#form"))
+  }).then(function (response) {
+    //console.log(response.status);
+    if (!response.ok) {
+      showMessage("Article submission was unsuccessful", "error");
+    } else {
       showMessage("Article submission was successful.");
     }
-  })();
+    return response.json();
+  })
 }
 
-bibFile();
+try {
+  bibFile();
+} catch (error) {
+  
+}
+
+//Exporting modules for testing.
+try {
+  module.exports = {
+    fun: fun
+  }
+} catch (err) { };
