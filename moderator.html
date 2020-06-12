@@ -30,17 +30,12 @@
     <ul class="nav justify-content-end">
         <li class="nav-item mx-2">
             <p class="text-muted"><a class="nav-link text-reset user-select-none"
-                    style="padding-right: 0px; padding-left: 0px;" href="./index.html">Search</a></p>
+                    style="padding-right: 0px; padding-left: 0px;" href="index.html">Search</a></p>
         </li>
         <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
         <li class="nav-item mx-2">
             <p class="text-muted"><a class="nav-link text-reset user-select-none"
-                    style="padding-right: 0px; padding-left: 0px;" href="./moderator.html">Moderate</a></p>
-        </li>
-        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
-        <li class="nav-item mx-2">
-            <p class="text-muted"><a class="nav-link text-reset user-select-none"
-                    style="padding-right: 0px; padding-left: 0px;" href=" #">Analyse</a></p>
+                    style="padding-right: 0px; padding-left: 0px;" href="submit.html">Submission</a></p>
         </li>
     </ul>
 
@@ -51,26 +46,24 @@
             <div class="col-12" id="queue">
                 <div class="justify-content-center mt-5">
                     <form class="shadow p-3 mb-5 bg-white rounded">
-                        <h1 class="text-center">Article In Queue</h1>
+                        <h1 class="text-center">Next Article In Queue</h1>
                         <div class="invisble" style="height: 30px;"></div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="title">Title *</label>
-                                <div v-for="item in articles">
-                                    <input type="text" id="title" v-model.lazy="item.article.title" name="title"
-                                        class="form-control" v-bind:style="{border: titleError}" required>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="author">Author(s) *</label>
-                                <div v-for="item in articles">
-                                    <input type="text" id="author" v-model.lazy="item.article.author" name="author"
-                                        class="form-control" v-bind:style="{border: authorError}" required>
-                                </div>
+                        <div class="form-group">
+                            <label for="title">Title *</label>
+                            <div v-for="item in articles">
+                                <input type="text" id="title" v-model.lazy="item.article.title" name="title"
+                                    class="form-control" v-bind:style="{border: titleError}" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="author">Journal</label>
+                            <label for="author">Author(s) *</label>
+                            <div v-for="item in articles">
+                                <input type="text" id="author" v-model.lazy="item.article.author" name="author"
+                                    class="form-control" v-bind:style="{border: authorError}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="journal">Journal</label>
                             <div v-for="item in articles">
                                 <input type="text" id="journal" v-model="item.article.journal" name="journal"
                                     class="form-control">
@@ -95,14 +88,14 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-4">
-                                <label for="title">Volume</label>
+                                <label for="volume">Volume</label>
                                 <div v-for="item in articles">
                                     <input type="number" v-model="item.article.volume" id="volume" name="volume"
                                         class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-4">
-                                <label for="author">Pages</label>
+                                <label for="pages">Pages</label>
                                 <div v-for="item in articles">
                                     <input type="text" v-model="item.article.pages" id="pages" name="pages"
                                         class="form-control">
@@ -143,7 +136,7 @@
             <div class="col-12">
                 <div id="moderation">
                     <template>
-                        <h1 class="text-center">Submitted Acticles</h1>
+                        <h1 class="text-center">Submission Queue</h1>
                         <b-table :items="articles" :fields="fields" :busy="isBusy" striped hover bordered responsive
                             show-empty class="shadow p-3 mb-5 bg-white rounded" thead-class="user-select-none"
                             thead-tr-class="table-primary-custom no-outline text-center">
