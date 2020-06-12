@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap JS, Jquery, moment JS, Vue JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <!--  Custom CSS, tempusdominus bootstrap CSS -->
+    <link rel="stylesheet" href="css/moderator.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <title>Moderator Page</title>
+</head>
+
+<body>
+    <!--Navigation links-->
+    <ul class="nav justify-content-end">
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href="./index.html">Search</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href="./moderator.html">Moderate</a></p>
+        </li>
+        <p class="text-muted"><a class="nav-link text-reset user-select-none">|</a></p>
+        <li class="nav-item mx-2">
+            <p class="text-muted"><a class="nav-link text-reset user-select-none"
+                    style="padding-right: 0px; padding-left: 0px;" href=" #">Analyse</a></p>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col"></div>
+            <div class="col-12" id="queue">
+                <div class="justify-content-center mt-5">
+                    <form class="shadow p-3 mb-5 bg-white rounded">
+                        <h1 class="text-center">Article In Queue</h1>
+                        <div class="invisble" style="height: 30px;"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="title">Title *</label>
+                                <div v-for="item in articles">
+                                    <input type="text" id="title" v-model.lazy="item.article.title" name="title"
+                                        class="form-control" v-bind:style="{border: titleError}" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="author">Author(s) *</label>
+                                <div v-for="item in articles">
+                                    <input type="text" id="author" v-model.lazy="item.article.author" name="author"
+                                        class="form-control" v-bind:style="{border: authorError}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Journal</label>
+                            <div v-for="item in articles">
+                                <input type="text" id="journal" v-model="item.article.journal" name="journal"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="year">Year *</label>
+                                <div v-for="item in articles">
+                                    <input type="text" id="year" v-model.lazy="item.article.year" name="year"
+                                        class="form-control" v-bind:style="{border: yearError}" required>
+                                </div>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="doi">DOI *</label>
+                                <div v-for="item in articles">
+                                    <input type="text" id="doi" v-model.lazy="item.article.doi" name="doi"
+                                        class="form-control" v-bind:style="{border: doiError}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="title">Volume</label>
+                                <div v-for="item in articles">
+                                    <input type="number" v-model="item.article.volume" id="volume" name="volume"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="author">Pages</label>
+                                <div v-for="item in articles">
+                                    <input type="text" v-model="item.article.pages" id="pages" name="pages"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="journalIssue">Journal Issue</label>
+                                <div v-for="item in articles">
+                                    <input type="number" id="journalIssue" v-model="item.article.journalIssue"
+                                        name="journalIssue" class="form-control" placeholder="2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <!-- Accept acticle button -->
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-primary form-control"
+                                        @click="acceptArticle">Accept</button>
+                                </div>
+                                <!-- reject acticle button -->
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-danger form-control"
+                                        @click="deleteArticle(articles[0].id, articles[0].popReceipt)">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="invisble" style="height: 50px;"></div>
+
+        <!-- list for all submited articles -->
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-12">
+                <div id="moderation">
+                    <template>
+                        <h1 class="text-center">Submitted Acticles</h1>
+                        <b-table :items="articles" :fields="fields" :busy="isBusy" striped hover bordered responsive
+                            show-empty class="shadow p-3 mb-5 bg-white rounded" thead-class="user-select-none"
+                            thead-tr-class="table-primary-custom no-outline text-center">
+
+                            <!-- Table loading spinner-->
+                            <template v-slot:table-busy>
+                                <div class="text-center text-danger my-2">
+                                    <b-spinner class="align-middle"></b-spinner>
+                                    <strong>Loading...</strong>
+                                </div>
+                            </template>
+
+                            <!-- Empty Queue-->
+                            <template v-slot:empty="scope">
+                                <h4 class="text-center">No Articles are waiting!</h4>
+                            </template>
+
+                            <template v-slot:cell(Doi)="data">
+                                <a :href="'https://doi.org/' + data.item.Doi" target="_blank">{{data.item.Doi}}</a>
+                            </template>
+                        </b-table>
+                    </template>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+
+    </div>
+</body>
+
+<!-- Local JS:: after body is loded -->
+<script type='text/javascript' src="js/moderation.js"></script>
+
+</html>

@@ -13,7 +13,3 @@ class HttpClient {
         };
     }
 }
-
-try{
-module.exports = HttpClient;
-}catch(err){}
