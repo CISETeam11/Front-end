@@ -61,7 +61,9 @@ function showMessage(str, type) {
   message.innerHTML = str;
   message.style.display = "block";
 }
-
+function resetSubmitForm(){
+  message.style.display = "none";
+}
 function submitArticle() {
   showMessage("");
   document.getElementById("doi").classList.remove("is-invalid");
